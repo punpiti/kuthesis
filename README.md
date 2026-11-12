@@ -2,7 +2,7 @@
 
 คลาส LaTeX สำหรับวิทยานิพนธ์ **สายวิทยาศาสตร์ มหาวิทยาลัยเกษตรศาสตร์** จัดรูปแบบตาม
 *คู่มือการพิมพ์วิทยานิพนธ์ สายวิทยาศาสตร์* (บัณฑิตวิทยาลัย มก., พ.ศ. 2553)
-โดยใช้ฟอนต์ฟรี: **TH Sarabun New** (ไทย) + **Inter** (อังกฤษ) + **Fira Math** (คณิตศาสตร์)
+โดยใช้ฟอนต์ฟรี: **TH Sarabun New** (ไทย) + **TeX Gyre Termes** (อังกฤษ — ฟอนต์ฟรีที่ขนาดและความกว้างเท่า Times New Roman ตามที่คู่มือกำหนด) + **TeX Gyre Termes Math** (คณิตศาสตร์)
 
 > **ไม่ใช่เอกสารทางการของมหาวิทยาลัย** — โปรดตรวจกับข้อกำหนดล่าสุดของบัณฑิตวิทยาลัย
 > และแบบฟอร์มทางการ (ใบรับรองวิทยานิพนธ์, บทคัดย่อ) ก่อนส่งเล่มจริง
@@ -18,11 +18,29 @@
 | `references.bib` | ตัวอย่างรายการอ้างอิง (นำมาจากตัวอย่างในคู่มือ) |
 | `logo/` | ตรามหาวิทยาลัย (ไทย, อังกฤษ, สีเขียวสำหรับใบรับรอง) |
 
+## ฟอนต์: ใช้ฟอนต์ฟรีที่ถูกกฎหมายแทนฟอนต์ลิขสิทธิ์
+
+ฟอนต์ที่คู่มือของบัณฑิตวิทยาลัยกำหนด — **AngsanaUPC, BrowalliaUPC, CordiaUPC, DilleniaUPC, EucrosiaUPC,
+FreesiaUPC** (ไทย) และ **Times New Roman** (อังกฤษ) — เป็น **ฟอนต์ที่มีลิขสิทธิ์** ของบริษัทผู้ผลิต
+ใช้ได้ภายใต้สัญญาอนุญาตที่มากับ Windows / Microsoft Office เท่านั้น นำไปแจกจ่ายหรือฝังใช้นอกเงื่อนไขนั้นไม่ได้
+และไม่มีให้ใช้บน Linux หรือระบบที่ไม่ได้ซื้อสิทธิ์
+
+คลาสนี้จึงใช้ **ฟอนต์ฟรีที่ใช้และแจกจ่ายได้ถูกกฎหมาย** แทน โดยเลือกให้หน้าตาและขนาดใกล้ฟอนต์ที่คู่มือกำหนดที่สุด
+
+| ใช้แทน | ฟอนต์ในคลาส | สัญญาอนุญาต |
+|---|---|---|
+| ฟอนต์ไทยตระกูล UPC | **TH Sarabun New** | ฟอนต์แห่งชาติ (SIPA) ใช้ได้ฟรี |
+| Times New Roman | **TeX Gyre Termes** — ขนาดและความกว้างตัวอักษรเท่า Times ทุกตัว | GUST Font License (ฟรี) |
+| สมการ | **TeX Gyre Termes Math** — ชุดเดียวกับ Termes | GUST Font License (ฟรี) |
+| โค้ด / ตัวพิมพ์ดีด | **Fira Mono** | SIL Open Font License 1.1 (ฟรี) |
+
+ขนาดตัวอักษรยังตรงตามคู่มือ: ไทย 16/18 พอยท์ อังกฤษ 12/14 พอยท์
+
 ## สิ่งที่ต้องมี
 
 - TeX Live 2023 ขึ้นไป (หรือ MiKTeX) — ใช้ **XeLaTeX** + **biber**
 - ฟอนต์ **TH Sarabun New** ติดตั้งในเครื่อง (ฟอนต์แห่งชาติ ดาวน์โหลดฟรี)
-- Inter, Fira Mono, Fira Math มากับ TeX Live แล้ว
+- TeX Gyre Termes, TeX Gyre Termes Math, Fira Mono มากับ TeX Live แล้ว
 
 ```sh
 latexmk -xelatex example-th      # หรือ
@@ -82,8 +100,8 @@ xelatex example-th && biber example-th && xelatex example-th && xelatex example-
 | `thai` / `english` | ภาษาของเล่ม (ค่าเริ่มต้น `thai`) |
 | `numbered` | ใส่เลขกำกับหัวข้อข้าง `1.` และระดับย่อหน้า `1.1`, `1.1.1` |
 | `guides` | วาดเส้นสีแดงตามระยะวัดของคู่มือ เพื่อตรวจระยะ (ปิดก่อนส่งเล่ม) |
-| `latin=inter` / `latin=sarabun` | ฟอนต์ตัวอักษรละติน (ดูหมายเหตุด้านล่าง) |
-| `math=fira` / `lete` / `newcm` / `stix` / `none` | ฟอนต์คณิตศาสตร์ |
+| `latin=termes` / `latin=inter` / `latin=sarabun` | ฟอนต์ตัวอักษรละติน: Termes (ค่าเริ่มต้น, แทน Times New Roman), Inter, หรือ TH Sarabun New |
+| `math=termes` / `fira` / `lete` / `newcm` / `stix` / `none` | ฟอนต์คณิตศาสตร์ (ค่าเริ่มต้น `termes`) |
 | `thaifont=...` | เปลี่ยนฟอนต์ไทย (ค่าเริ่มต้น `TH Sarabun New`) |
 
 ## การอ้างอิง (biblatex `style=kuthesis`)
@@ -119,8 +137,8 @@ xelatex example-th && biber example-th && xelatex example-th && xelatex example-
 | ย่อหน้า | เยื้อง 0.5 นิ้ว, เว้น 1 บรรทัดระหว่างย่อหน้าและรอบหัวข้อ | `\parindent` 0.5in, `\parskip` = 1 บรรทัด |
 
 ขนาดอักษรในคลาสเรียกตาม “พอยท์ไทย” ของคู่มือ (เนื้อหา 16, หัวข้อใหญ่ 18, ในตารางไม่ต่ำกว่า 14)
-ฟอนต์ละตินและคณิตศาสตร์ถูกย่อ/ขยายให้ความสูงตัว x เท่ากับ TH Sarabun New
-(ซึ่งเท่ากับ Times New Roman 12 pt พอดี — ตรงกับที่คู่มือให้ “ขนาดเทียบได้กับอักษรไทย 16 พอยท์”)
+ตัวอังกฤษ (Termes) ได้ขนาด **12 pt** ในเนื้อหาและ **14 pt** ในหัวข้อใหญ่ของเล่มอังกฤษ ตรงตามคู่มือ (Times New Roman 12/14)
+และความสูงตัว x เท่ากับ TH Sarabun New 16 pt — ตรงกับที่คู่มือให้ “ขนาดเทียบได้กับอักษรไทย 16 พอยท์”
 
 ตรวจระยะด้วยตัวเลือก `guides`
 
@@ -145,8 +163,9 @@ xelatex example-th && biber example-th && xelatex example-th && xelatex example-
 
 ## ข้อที่ควรทราบ
 
-- **ฟอนต์อังกฤษในเล่มไทย**: คู่มือข้อ 4 (บทที่ 4) ให้ตัวอังกฤษในเล่มไทยใช้ “แบบอักษรเดียวกับอักษรไทย”
-  ค่าเริ่มต้นของคลาสใช้ Inter เพื่อความสวยงาม หากต้องการตามคู่มือเคร่งครัดให้ใช้ `latin=sarabun`
+- **ฟอนต์อังกฤษ**: คู่มือกำหนด Times New Roman สำหรับเล่มอังกฤษ คลาสใช้ TeX Gyre Termes ซึ่งเป็นฟอนต์ฟรีที่ขนาดและความกว้าง
+  ตัวอักษรเท่า Times ทุกตัว (วัดเทียบกับตัวอย่างในคู่มือแล้วตำแหน่งตรงกันระดับ 0.01 นิ้ว)
+  ส่วนตัวอังกฤษในเล่มไทย คู่มือข้อ 4 ให้ใช้ “แบบอักษรเดียวกับอักษรไทย” — ถ้าต้องการตามนั้นเคร่งครัดใช้ `latin=sarabun`
 - **ตรามหาวิทยาลัย** ในโฟลเดอร์ `logo/` แกะจากภาพในคู่มือ (ความละเอียดต้นฉบับประมาณ 150 dpi
   ขยายและทำความสะอาดเป็นภาพขาว–ดำ/เขียว) หากได้ไฟล์ตราความละเอียดสูงจากมหาวิทยาลัยให้ใช้แทน;
   ถ้าไม่มีไฟล์ คลาสจะวาดวงกลมแทนโดยไม่ error · ตราเป็นเครื่องหมายของมหาวิทยาลัย ใช้เพื่อจัดทำวิทยานิพนธ์เท่านั้น
@@ -164,8 +183,11 @@ LaTeX Project Public License 1.3c or later (see `LICENSE`).
 
 Unofficial XeLaTeX class + biblatex style for Kasetsart University science-track theses,
 following the Graduate School's 2010 (B.E. 2553) formatting manual. Thai text is set in
-TH Sarabun New with ICU dictionary line breaking; Latin text in Inter and math in Fira
-Math, scaled so all x-heights match. Margins are measured to the baseline as the manual
+TH Sarabun New with ICU dictionary line breaking; Latin text in TeX Gyre Termes (a free,
+metric-compatible Times New Roman, the font the manual names) at exactly 12/14 pt, and
+math in TeX Gyre Termes Math.
+The fonts named by the manual (AngsanaUPC and the other UPC fonts, Times New Roman) are
+proprietary; this class uses only free, legally redistributable fonts in their place. Margins are measured to the baseline as the manual
 specifies (first baseline 1.5 in from the top, last baseline ≥ 1 in from the bottom,
 page number baseline 1 in from the top). The biblatex style implements the manual's
 name–year system, with Thai references listed first and cited by given name.

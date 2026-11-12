@@ -24,8 +24,8 @@
 \newif\ifku@numbered  \ku@numberedfalse
 \newif\ifku@guides    \ku@guidesfalse
 \newif\ifku@doctor    \ku@doctorfalse
-\def\ku@latin{inter}
-\def\ku@math{fira}
+\def\ku@latin{termes}
+\def\ku@math{termes}
 \def\ku@thaifontname{TH Sarabun New}
 
 \DeclareKeys{
@@ -67,13 +67,16 @@
 % ---------------------------------------------------------------------------
 % Fonts
 %   * Thai script      -> TH Sarabun New (option thaifont=...)
-%   * everything else  -> Inter (option latin=inter) or the Thai font itself
-%                         (latin=sarabun, the manual's strict "same font" rule)
-%   * math             -> Fira Math / Lete Sans Math / New Computer Modern /
-%                         STIX Two (option math=...)
-%   Scales were measured so that every font's x-height equals TH Sarabun New's
-%   at the same nominal size (16 pt Sarabun x-height = 5.44 pt, which is also
-%   the x-height of Times New Roman 12 pt -- the manual's equivalence).
+%   * everything else  -> TeX Gyre Termes (default, latin=termes): free,
+%                         metric-compatible Times New Roman, the font the
+%                         manual names for English; Inter (latin=inter); or
+%                         the Thai font itself (latin=sarabun)
+%   * math             -> TeX Gyre Termes Math (default) / Fira Math /
+%                         Lete Sans Math / New Computer Modern / STIX Two
+%   Nominal sizes are Thai points. Termes is scaled 0.75 so that the body
+%   (16) is exactly Times 12 pt and English headings are Times 14 pt, as the
+%   manual prescribes; its x-height (5.40 pt) then matches TH Sarabun New
+%   16 pt (5.44 pt). The other fonts are scaled to the same x-height.
 % ---------------------------------------------------------------------------
 \defaultfontfeatures{Ligatures=TeX}
 \newfontfamily\ku@thaifamily{\ku@thaifontname}[Script=Thai,NFSSFamily=kuthai]
@@ -83,6 +86,13 @@
 \ifx\ku@latin\ku@tmp
   \setmainfont{\ku@thaifontname}[Script=Thai]
   \setsansfont{\ku@thaifontname}[Script=Thai]
+\else\def\ku@tmp{termes}\ifx\ku@latin\ku@tmp
+  \setmainfont{texgyretermes}[
+    Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+    ItalicFont=*-italic, BoldItalicFont=*-bolditalic, Scale=0.75]
+  \setsansfont{texgyretermes}[
+    Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+    ItalicFont=*-italic, BoldItalicFont=*-bolditalic, Scale=0.75]
 \else
   \setmainfont{Inter}[
     Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
@@ -92,7 +102,7 @@
     Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
     ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic, Scale=0.623,
     RawFeature=-calt]
-\fi
+\fi\fi
 \setmonofont{FiraMono}[
   Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
   ItalicFont=*-Oblique, BoldItalicFont=*-BoldOblique, Scale=0.645]
@@ -100,6 +110,8 @@
 \def\ku@tmp{none}
 \ifx\ku@math\ku@tmp\else
   \RequirePackage{unicode-math}
+  \def\ku@tmp{termes}\ifx\ku@math\ku@tmp
+    \setmathfont{texgyretermes-math.otf}[Scale=0.75]\fi
   \def\ku@tmp{fira}\ifx\ku@math\ku@tmp
     \setmathfont{FiraMath-Regular.otf}[Scale=0.645]\fi
   \def\ku@tmp{lete}\ifx\ku@math\ku@tmp
@@ -191,11 +203,18 @@
   \abovedisplayshortskip\abovedisplayskip
   \belowdisplayshortskip\abovedisplayskip
   \let\@listi\@listI}
-\renewcommand\small{\@setfontsize\small{14.05}{\ku@blsS}}
-\renewcommand\footnotesize{\@setfontsize\footnotesize{14.05}{\ku@blsS}}
+% English thesis: "large" = Times 14 pt (headings), "small" = Times 11 pt
+% (the minimum the manual allows inside tables and figures)
+\ifku@thai
+  \def\ku@smallsize{14.05}\def\ku@largesize{18.07}
+\else
+  \def\ku@smallsize{14.73}\def\ku@largesize{18.75}
+\fi
+\renewcommand\small{\@setfontsize\small{\ku@smallsize}{\ku@blsS}}
+\renewcommand\footnotesize{\@setfontsize\footnotesize{\ku@smallsize}{\ku@blsS}}
 \renewcommand\scriptsize{\@setfontsize\scriptsize{12.05}{16}}
 \renewcommand\tiny{\@setfontsize\tiny{10.04}{13}}
-\renewcommand\large{\@setfontsize\large{18.07}{\ku@blsL}}
+\renewcommand\large{\@setfontsize\large{\ku@largesize}{\ku@blsL}}
 \renewcommand\Large{\@setfontsize\Large{20}{27}}
 \renewcommand\LARGE{\@setfontsize\LARGE{24}{32}}
 \renewcommand\huge{\@setfontsize\huge{28}{38}}
