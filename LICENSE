@@ -1,26 +1,41 @@
-kuthesis -- LaTeX class and biblatex style for Kasetsart University theses
-Copyright (C) 2026 Punpiti Piamsa-nga
+MIT License
 
-This work may be distributed and/or modified under the conditions of the
-LaTeX Project Public License, either version 1.3c of this license or (at your
-option) any later version. The latest version of this license is in
-  https://www.latex-project.org/lppl.txt
-and version 1.3c or later is part of all distributions of LaTeX version
-2008 or later.
+Copyright (c) 2026 Punpiti Piamsa-nga
 
-This work has the LPPL maintenance status `maintained'.
-The Current Maintainer of this work is Punpiti Piamsa-nga.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This work consists of the files kuthesis.cls, kuthesis.bbx, kuthesis.cbx,
-example-th.tex, example-en.tex, references.bib, latexmkrc, install.sh,
-install.ps1, AI-CONVERT.md, AI-SETUP.md, workspace/AGENTS.md,
-workspace/CLAUDE.md, draft-template/*, docs/index.html and .vscode/*.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-The thesis templates in draft-template/ may be filled in and used freely;
-the text a student writes into them belongs to the student.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-This is not an official publication of Kasetsart University.
+-------------------------------------------------------------------------------
+Notes (not part of the license terms above)
 
-The emblem images in logo/ are marks of Kasetsart University, extracted from
-the Graduate School's thesis manual. They are NOT covered by the LPPL and are
-included only so that theses for Kasetsart University can be prepared.
+* Request: if you distribute a modified version, please state what you changed
+  and link to the original at https://github.com/punpiti/kuthesis .
+
+* Your thesis is yours. Theses, PDFs and text produced with kuthesis, and the
+  text a student writes into the templates in draft-template/, belong to their
+  authors; this license does not apply to them.
+
+* The emblem images in logo/ are marks of Kasetsart University, extracted from
+  the Graduate School's thesis manual. They are NOT covered by this license and
+  are included only so that theses for Kasetsart University can be prepared.
+
+* Fonts are not part of this repository: TH Sarabun New (SIPA, free) is
+  downloaded by the installers; TeX Gyre Termes (GUST Font License) and Fira
+  Mono (SIL OFL 1.1) come with TeX Live.
+
+* This is not an official publication of Kasetsart University.

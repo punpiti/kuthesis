@@ -175,4 +175,4 @@ Finish with a one-paragraph summary of what you installed, where, and the versio
 
 ---
 
-<sub>kuthesis — Copyright (C) 2026 Punpiti Piamsa-nga. Licensed under the LaTeX Project Public License 1.3c or later (see LICENSE).</sub>
+<sub>kuthesis — Copyright (C) 2026 Punpiti Piamsa-nga. Licensed under the MIT License (see LICENSE).</sub>

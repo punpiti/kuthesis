@@ -217,21 +217,11 @@ xelatex example-th && biber example-th && xelatex example-th && xelatex example-
 
 ## License
 
-Copyright (C) 2026 Punpiti Piamsa-nga.
+**kuthesis © 2026 Punpiti Piamsa-nga** — [MIT License](LICENSE)
 
-LaTeX Project Public License 1.3c or later (see `LICENSE`).
+ใช้ แก้ไข และแจกจ่ายต่อได้ฟรี โดย **ต้องคงข้อความลิขสิทธิ์ที่มีชื่อผู้สร้างและข้อความสัญญาอนุญาตไว้ในทุกสำเนาและงานที่แก้ไข**
+ถ้านำไปแก้ไขแล้วเผยแพร่ ขอให้ระบุว่าแก้อะไรและลิงก์กลับมาที่ต้นฉบับ
+วิทยานิพนธ์และ PDF ที่สร้างด้วย kuthesis เป็นของนิสิตผู้เขียน ตรามหาวิทยาลัยใน `logo/` ไม่อยู่ภายใต้ MIT (ดู LICENSE)
 
----
-
-## English summary
-
-Unofficial XeLaTeX class + biblatex style for Kasetsart University science-track theses,
-following the Graduate School's 2010 (B.E. 2553) formatting manual. Thai text is set in
-TH Sarabun New with ICU dictionary line breaking; Latin text in TeX Gyre Termes (a free,
-metric-compatible Times New Roman, the font the manual names) at exactly 12/14 pt, and
-math in TeX Gyre Termes Math.
-The fonts named by the manual (AngsanaUPC and the other UPC fonts, Times New Roman) are
-proprietary; this class uses only free, legally redistributable fonts in their place. Margins are measured to the baseline as the manual
-specifies (first baseline 1.5 in from the top, last baseline ≥ 1 in from the bottom,
-page number baseline 1 in from the top). The biblatex style implements the manual's
-name–year system, with Thai references listed first and cited by given name.
+Free to use, modify and redistribute; keep the copyright notice (with the author's name) and the
+license text in all copies and modified versions.

@@ -17,7 +17,7 @@
 
 #
 # Copyright (C) 2026 Punpiti Piamsa-nga
-# Licensed under the LaTeX Project Public License 1.3c or later (see LICENSE).
+# Licensed under the MIT License (see LICENSE).
 # https://github.com/punpiti/kuthesis
 
 set -euo pipefail

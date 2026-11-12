@@ -3,8 +3,9 @@
 %% following "คู่มือการพิมพ์วิทยานิพนธ์ สายวิทยาศาสตร์" (Graduate School, KU, 2553/2010).
 %%
 %% Copyright (C) 2026 Punpiti Piamsa-nga
-%% This work may be distributed and/or modified under the conditions of the
-%% LaTeX Project Public License, version 1.3c or later.
+%% Licensed under the MIT License (see LICENSE): free to use, modify and
+%% distribute, provided this copyright notice is kept in all copies and
+%% modified versions.
 %%
 %% Engine: XeLaTeX (ICU dictionary-based Thai line breaking).
 %%
