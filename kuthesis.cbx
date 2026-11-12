@@ -1,0 +1,28 @@
+%% kuthesis.cbx -- biblatex citation style for Kasetsart University theses
+%% (science track): name-and-year system.
+%%
+%%   \textcite{key}        Prathuangwong (2009)       สมศรี (2552)
+%%   \parencite{key}       (Prathuangwong, 2009)      (สมศรี, 2552)
+%%   \parencite[3]{key}    (Burr, 2009: 3)            (อัญชลี และคณะ, 2550: 2-5)
+%%   \textcite[3]{key}     Burr (2009: 3)
+%%   \parencite{a,b}       (Smith, 2001, 2003; Jones, 2002)
+%%
+%% Copyright (C) 2026 Punpiti Piamsa-nga -- LPPL 1.3c or later.
+\ProvidesFile{kuthesis.cbx}[2026/11/13 v0.1 KU thesis citation style]
+
+\RequireCitationStyle{authoryear-comp}
+
+\DeclareDelimFormat{nameyeardelim}{\addcomma\space}
+\DeclareDelimFormat[textcite]{nameyeardelim}{\addspace}
+\DeclareDelimFormat{postnotedelim}{\addcolon\space}
+\DeclareDelimFormat{multicitedelim}{\addsemicolon\space}
+\DeclareFieldFormat{postnote}{\mknormrange{#1}}
+\DeclareFieldFormat{multipostnote}{\mknormrange{#1}}
+
+% No year: ม.ป.ป. / n.d.
+\renewbibmacro*{cite:labeldate+extradate}{%
+  \iffieldundef{labelyear}
+    {\printtext[bibhyperref]{\kuifthai{ม.ป.ป.}{n.d.}}}
+    {\printtext[bibhyperref]{\printlabeldateextra}}}
+
+\endinput

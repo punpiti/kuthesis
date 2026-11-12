@@ -1,0 +1,25 @@
+# LaTeX build artefacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+example-*.pdf
+
+# KU manual (university copyright) -- source material, not redistributed
+STU-sci53-*.pdf
+
+# Local agent/project tooling
+.ai/
+AGENTS.md
+CLAUDE.md
+ANTIGRAVITY.md

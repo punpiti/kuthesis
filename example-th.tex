@@ -1,0 +1,198 @@
+% ตัวอย่างวิทยานิพนธ์ภาษาไทย -- compile:  latexmk -xelatex example-th
+\documentclass[thai]{kuthesis}
+% options: thai | english, numbered (เลขกำกับหัวข้อข้าง), guides (เส้นวัดระยะ),
+%          latin=inter|sarabun, math=fira|lete|newcm|stix|none, thaifont=...
+
+\usepackage[style=kuthesis]{biblatex}
+\addbibresource{references.bib}
+
+\thesistitle{การบำบัดน้ำเสียด้วยจุลินทรีย์แบบยึดเกาะตัวกลางชนิดเส้นใยไนล่อนโดยระบบถังกรองไร้อากาศ}
+            {Wastewater Treatment of Fixed Film Microorganism on Nylon Rope Media by Anaerobic Filter}
+\thaiauthor[นางสาว]{ซันวานี}{จิใจ}
+\englishauthor[Miss]{Sunwanee}{Jijai}
+\degree{วิศวกรรมศาสตรมหาบัณฑิต (วิศวกรรมสิ่งแวดล้อม)}
+       {Master of Engineering (Environmental Engineering)}
+\majorfield{วิศวกรรมสิ่งแวดล้อม}{Environmental Engineering}
+\department{วิศวกรรมสิ่งแวดล้อม}{Environmental Engineering}
+\advisor{รองศาสตราจารย์สมชาย ใจดี, Ph.D.}{Associate Professor Somchai Jaidee, Ph.D.}
+\coadvisor{ผู้ช่วยศาสตราจารย์สมหญิง รักเรียน, D.Eng.}{Assistant Professor Somying Rakrian, D.Eng.}
+\departmenthead{รองศาสตราจารย์สมศักดิ์ ตั้งใจ, Ph.D.}{Associate Professor Somsak Tangjai, Ph.D.}
+\dean{รองศาสตราจารย์กัญจนา ธีระกุล, D.Agr.}{Associate Professor Gunjana Theeragool, D.Agr.}
+\thesisyear{2549}{2006}
+\ackdate{สิงหาคม 2549}{August 2006}
+\kulogo[logo/ku-logo-en.png]{logo/ku-logo-th.png}  % ตรามหาวิทยาลัย (ไม่มีไฟล์ = วงกลมแทน)
+\kuapprovallogo{logo/ku-logo-th-green.png}
+
+\begin{document}
+
+\frontmatter
+\makecover
+\makeapproval
+\maketitlepage
+
+\begin{thaiabstract}
+  งานวิจัยนี้ศึกษาการบำบัดน้ำเสียด้วยถังกรองไร้อากาศ (anaerobic filter) ที่ใช้เส้นใยไนล่อนเป็นตัวกลางให้จุลินทรีย์ยึดเกาะ
+  โดยเดินระบบที่ภาระบรรทุกสารอินทรีย์ 0.5--4.0 kg COD/m\textsuperscript{3}$\cdot$d
+  ผลการทดลองพบว่าระบบสามารถกำจัดซีโอดีได้ร้อยละ 85--92
+
+  ระยะเวลากักเก็บน้ำที่เหมาะสมคือ 12 ชั่วโมง และอัตราการเกิดก๊าซชีวภาพแปรผันตามภาระบรรทุกสารอินทรีย์
+\end{thaiabstract}
+
+\begin{englishabstract}
+  This research studied an anaerobic filter using nylon rope as the support medium for
+  attached microorganisms. The reactor was operated at organic loading rates of
+  0.5--4.0~kg~COD/m\textsuperscript{3}$\cdot$d and removed 85--92\% of COD.
+
+  The optimum hydraulic retention time was 12 hours.
+\end{englishabstract}
+
+\begin{acknowledgments}
+  ผู้วิจัยขอกราบขอบพระคุณ รองศาสตราจารย์ ดร.สมชาย ใจดี ประธานกรรมการที่ปรึกษา
+  ที่ให้คำปรึกษาในการเรียน การค้นคว้าวิจัย และการเขียนวิทยานิพนธ์จนเสร็จสมบูรณ์
+
+  ขอขอบพระคุณบิดา มารดา ที่ให้การอบรมและให้กำลังใจผู้วิจัยมาตลอด
+\end{acknowledgments}
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+\begin{abbreviations}
+  \abbr{BOD}{biochemical oxygen demand}
+  \abbr{COD}{chemical oxygen demand (ความต้องการออกซิเจนทางเคมี)}
+  \abbr{HRT}{hydraulic retention time}
+  \abbr{OLR}{organic loading rate}
+  \abbr{$\mu$}{อัตราการเจริญจำเพาะ (d\textsuperscript{-1})}
+\end{abbreviations}
+
+\mainmatter
+
+\chapter{คำนำ}
+
+ผีเสื้อจัดเป็นแมลงในอันดับ (Order) Lepidoptera แบ่งได้เป็น 2 ประเภท คือ ผีเสื้อกลางวัน
+และผีเสื้อกลางคืน \textcite{boddington2000a} กล่าวว่าการจัดการทางการเกษตรมีผลต่อเชื้อรา
+อาร์บัสคูลาร์ไมคอร์ไรซา ขณะที่ \textcite{patcharaporn2552} เสนอตัวแบบการจัดสรรทรัพยากร
+และมีการศึกษาที่เกี่ยวข้องอีกหลายเรื่อง \parencite{siriyaporn2552,chutima2551,peterson2004}
+
+การอ้างอิงเฉพาะหน้าใช้เครื่องหมายทวิภาค เช่น \parencite[2-5]{pitchapa2552}
+หรือ \textcite[3]{bago2000} ส่วนข้อมูลจากเว็บไซต์อ้างอิงเช่นเดียวกัน \parencite{moac2551,who2006}
+
+\chapter{วัตถุประสงค์}
+
+\begin{enumerate}
+  \item เพื่อศึกษาประสิทธิภาพการกำจัดซีโอดีของถังกรองไร้อากาศ
+  \item เพื่อหาระยะเวลากักเก็บน้ำที่เหมาะสม
+\end{enumerate}
+
+\chapter{การตรวจเอกสาร}
+
+\section{ระบบบำบัดน้ำเสียแบบไร้อากาศ}
+
+\subsection{หลักการทำงาน}
+
+ระบบบำบัดแบบไร้อากาศอาศัยจุลินทรีย์ย่อยสลายสารอินทรีย์ในสภาวะไม่มีออกซิเจน
+อัตราการเจริญจำเพาะของจุลินทรีย์อธิบายได้ด้วยสมการของ Monod ดังสมการที่ (\ref{eq:monod})
+\begin{equation}
+  \mu = \mu_{\max}\,\frac{S}{K_s + S} \label{eq:monod}
+\end{equation}
+เมื่อ $\mu$ คืออัตราการเจริญจำเพาะ $S$ คือความเข้มข้นของสารอาหาร
+และ $K_s$ คือค่าคงที่ครึ่งอิ่มตัว
+
+\subsubsection{ปัจจัยด้านอุณหภูมิ}
+อุณหภูมิที่เหมาะสมต่อแบคทีเรียสร้างมีเทนอยู่ในช่วง 30--38 องศาเซลเซียส
+
+\subsubsection{ปัจจัยด้านพีเอช}
+ค่าพีเอชที่เหมาะสมอยู่ระหว่าง 6.8--7.2
+
+\subsection{ตัวกลางสำหรับจุลินทรีย์ยึดเกาะ}
+
+ผลการเปรียบเทียบตัวกลางแสดงในตารางที่ \ref{tab:media} และภาพที่ \ref{fig:reactor}
+
+\begin{table}[htbp]
+  \caption{คุณสมบัติของตัวกลางชนิดต่าง ๆ ที่ใช้ในถังกรองไร้อากาศ}
+  \label{tab:media}
+  \centering
+  \begin{tabular}{lccc}
+    \toprule
+    ตัวกลาง & พื้นที่ผิวจำเพาะ & ความพรุน & ราคา \\
+            & (m\textsuperscript{2}/m\textsuperscript{3}) & (\%) & (บาท/m\textsuperscript{3}) \\
+    \midrule
+    เส้นใยไนล่อน & 320 & 96 & 1,200 \\
+    พลาสติกริง   & 210 & 92 & 3,500 \\
+    หินกรวด      & 60  & 45 & 400 \\
+    \bottomrule
+  \end{tabular}
+  \tablesource{\textcite{udomsak2549}}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox[c][1.6in][c]{3.2in}{\centering (แผนภาพถังกรองไร้อากาศ)}}
+  \caption{แผนภาพของถังกรองไร้อากาศที่ใช้เส้นใยไนล่อนเป็นตัวกลาง
+           ซึ่งชื่อภาพยาวเกินหนึ่งบรรทัดจะพิมพ์บรรทัดถัดไปตรงกับอักษรตัวแรกของชื่อภาพ}
+  \label{fig:reactor}
+\end{figure}
+
+\section{งานวิจัยที่เกี่ยวข้อง}
+
+\textcite{chokprasin2003} และ \textcite{nabhadalung2005} ศึกษาเรื่องที่เกี่ยวข้อง
+รวมทั้ง \textcite{buddhakulsomsiri2008} และ \textcite{seranevijaikitkhan2008}
+
+\chapter{อุปกรณ์และวิธีการ}
+
+\section{อุปกรณ์}
+ถังปฏิกรณ์ทำจากอะคริลิกใส ขนาดเส้นผ่านศูนย์กลาง 15 เซนติเมตร
+
+\section{วิธีการ}
+เดินระบบต่อเนื่องเป็นเวลา 180 วัน
+
+\chapter{ผลและวิจารณ์}
+
+\section{ผล}
+ระบบเข้าสู่สภาวะคงตัวภายใน 45 วัน
+
+\section{วิจารณ์}
+ผลการทดลองสอดคล้องกับ \textcite{peterson2004}
+
+\chapter{สรุปและข้อเสนอแนะ}
+
+\section{สรุป}
+ถังกรองไร้อากาศที่ใช้เส้นใยไนล่อนเป็นตัวกลางมีประสิทธิภาพสูงและต้นทุนต่ำ
+
+\section{ข้อเสนอแนะ}
+ควรศึกษาการเดินระบบที่อุณหภูมิต่ำเพิ่มเติม
+
+\printbibliography
+
+\appendix
+\appendixsection{ผลการวิเคราะห์คุณภาพน้ำ}
+
+\begin{table}[htbp]
+  \caption{ค่าซีโอดีของน้ำเข้าและน้ำออกจากระบบ}
+  \centering
+  \begin{tabular}{ccc}
+    \toprule
+    วันที่ & น้ำเข้า (mg/L) & น้ำออก (mg/L) \\
+    \midrule
+    1 & 2,450 & 380 \\
+    2 & 2,510 & 342 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\appendixsection{แบบบันทึกข้อมูล}
+
+แบบบันทึกข้อมูลที่ใช้ในการวิจัย
+
+\begin{vitae}
+  \vitaeitem{ชื่อ}{นางสาวซันวานี จิใจ}
+  \vitaeitem{เกิดวันที่}{14 กุมภาพันธ์ 2520}
+  \vitaeitem{สถานที่เกิด}{อำเภอพญาไท จังหวัดกรุงเทพมหานคร}
+  \vitaeitem{ประวัติการศึกษา}{วศ.บ. (วิศวกรรมสิ่งแวดล้อม) มหาวิทยาลัยเกษตรศาสตร์}
+  \vitaeitem{ตำแหน่งปัจจุบัน}{วิศวกร}
+  \vitaeitem{สถานที่ทำงานปัจจุบัน}{กรมควบคุมมลพิษ กระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม}
+  \vitaeitem{ผลงานดีเด่นและ/หรือรางวัลทางวิชาการ}{รางวัลวิทยานิพนธ์ดีเด่น พ.ศ. 2549}
+  \vitaeitem{ทุนการศึกษาที่ได้รับ}{ทุนผู้ช่วยสอนจากบัณฑิตวิทยาลัย มหาวิทยาลัยเกษตรศาสตร์ (พ.ศ. 2547)}
+\end{vitae}
+
+\end{document}

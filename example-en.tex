@@ -1,0 +1,185 @@
+% English-language thesis example -- compile:  latexmk -xelatex example-en
+\documentclass[english]{kuthesis}
+% options: thai | english, numbered (เลขกำกับหัวข้อข้าง), guides (เส้นวัดระยะ),
+%          latin=inter|sarabun, math=fira|lete|newcm|stix|none, thaifont=...
+
+\usepackage[style=kuthesis]{biblatex}
+\addbibresource{references.bib}
+
+\thesistitle{การบำบัดน้ำเสียด้วยจุลินทรีย์แบบยึดเกาะตัวกลางชนิดเส้นใยไนล่อนโดยระบบถังกรองไร้อากาศ}
+            {Wastewater Treatment of Fixed Film Microorganism on Nylon Rope Media by Anaerobic Filter}
+\thaiauthor[นางสาว]{ซันวานี}{จิใจ}
+\englishauthor[Miss]{Sunwanee}{Jijai}
+\degree{วิศวกรรมศาสตรมหาบัณฑิต (วิศวกรรมสิ่งแวดล้อม)}
+       {Master of Engineering (Environmental Engineering)}
+\majorfield{วิศวกรรมสิ่งแวดล้อม}{Environmental Engineering}
+\department{วิศวกรรมสิ่งแวดล้อม}{Environmental Engineering}
+\advisor{รองศาสตราจารย์สมชาย ใจดี, Ph.D.}{Associate Professor Somchai Jaidee, Ph.D.}
+\coadvisor{ผู้ช่วยศาสตราจารย์สมหญิง รักเรียน, D.Eng.}{Assistant Professor Somying Rakrian, D.Eng.}
+\departmenthead{รองศาสตราจารย์สมศักดิ์ ตั้งใจ, Ph.D.}{Associate Professor Somsak Tangjai, Ph.D.}
+\dean{รองศาสตราจารย์กัญจนา ธีระกุล, D.Agr.}{Associate Professor Gunjana Theeragool, D.Agr.}
+\thesisyear{2549}{2006}
+\ackdate{สิงหาคม 2549}{August 2006}
+\kulogo[logo/ku-logo-en.png]{logo/ku-logo-th.png}  % ตรามหาวิทยาลัย (ไม่มีไฟล์ = วงกลมแทน)
+\kuapprovallogo{logo/ku-logo-th-green.png}
+
+\begin{document}
+
+\frontmatter
+\makecover
+\makeapproval
+\maketitlepage
+
+\begin{thaiabstract}
+  งานวิจัยนี้ศึกษาการบำบัดน้ำเสียด้วยถังกรองไร้อากาศ (anaerobic filter) ที่ใช้เส้นใยไนล่อนเป็นตัวกลางให้จุลินทรีย์ยึดเกาะ
+  โดยเดินระบบที่ภาระบรรทุกสารอินทรีย์ 0.5--4.0 kg COD/m\textsuperscript{3}$\cdot$d
+  ผลการทดลองพบว่าระบบสามารถกำจัดซีโอดีได้ร้อยละ 85--92
+
+  ระยะเวลากักเก็บน้ำที่เหมาะสมคือ 12 ชั่วโมง และอัตราการเกิดก๊าซชีวภาพแปรผันตามภาระบรรทุกสารอินทรีย์
+\end{thaiabstract}
+
+\begin{englishabstract}
+  This research studied an anaerobic filter using nylon rope as the support medium for
+  attached microorganisms. The reactor was operated at organic loading rates of
+  0.5--4.0~kg~COD/m\textsuperscript{3}$\cdot$d and removed 85--92\% of COD.
+
+  The optimum hydraulic retention time was 12 hours.
+\end{englishabstract}
+
+\begin{acknowledgments}
+  I would like to thank Associate Professor Dr. Somchai Jaidee, my thesis advisor, for his
+  advice and encouragement throughout this work.
+
+  I am grateful to my family for their support.
+\end{acknowledgments}
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+\begin{abbreviations}
+  \abbr{BOD}{biochemical oxygen demand}
+  \abbr{COD}{chemical oxygen demand}
+  \abbr{HRT}{hydraulic retention time}
+  \abbr{OLR}{organic loading rate}
+  \abbr{$\mu$}{specific growth rate (d\textsuperscript{-1})}
+\end{abbreviations}
+
+\mainmatter
+
+\chapter{Introduction}
+
+Recently, industrial activities have experienced rapid growth producing an increase in the
+volume and toxicity of residues \parencite{peterson2004}. \textcite{boddington2000a} reported
+that agricultural practices affect mycorrhizal fungi, and similar results were found by
+\textcite{chutima2551} and \textcite[3]{bago2000}. Several studies support this
+\parencite{buddhakulsomsiri2008,seranevijaikitkhan2008,who2006}.
+
+Biosorption, adsorption of heavy metal by biomass, has emerged as a potential alternative
+to conventional techniques.
+
+\chapter{Objectives}
+
+\begin{enumerate}
+  \item To study the COD removal efficiency of an anaerobic filter.
+  \item To determine the optimum hydraulic retention time.
+\end{enumerate}
+
+\chapter{Literature Review}
+
+\section{Anaerobic Treatment}
+
+\subsection{Principles}
+
+The specific growth rate follows the Monod equation (\ref{eq:monod}):
+\begin{equation}
+  \mu = \mu_{\max}\,\frac{S}{K_s + S} \label{eq:monod}
+\end{equation}
+where $S$ is the substrate concentration and $K_s$ the half-saturation constant.
+
+\subsubsection{Temperature}
+The optimum temperature for methanogens is 30--38\,°C.
+
+\subsubsection{pH}
+The optimum pH is 6.8--7.2.
+
+\subsection{Support Media}
+
+Media properties are given in Table~\ref{tab:media} and Figure~\ref{fig:reactor}.
+
+\begin{table}[htbp]
+  \caption{Properties of support media used in anaerobic filters.}
+  \label{tab:media}
+  \centering
+  \begin{tabular}{lccc}
+    \toprule
+    Medium & Specific area & Porosity & Cost \\
+           & (m\textsuperscript{2}/m\textsuperscript{3}) & (\%) & (Baht/m\textsuperscript{3}) \\
+    \midrule
+    Nylon rope   & 320 & 96 & 1,200 \\
+    Plastic ring & 210 & 92 & 3,500 \\
+    Gravel       & 60  & 45 & 400 \\
+    \bottomrule
+  \end{tabular}
+  \tablesource{\textcite{peterson2004}}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox[c][1.6in][c]{3.2in}{\centering (reactor diagram)}}
+  \caption{Schematic diagram of the anaerobic filter with nylon rope media; a caption longer
+           than one line is aligned with the first letter of the caption.}
+  \label{fig:reactor}
+\end{figure}
+
+\chapter{Materials and Methods}
+\section{Materials}
+The reactor was made of clear acrylic.
+\section{Methods}
+The system was operated continuously for 180 days.
+
+\chapter{Results and Discussion}
+\section{Results}
+Steady state was reached within 45 days.
+\section{Discussion}
+The results agree with \textcite{peterson2004}.
+
+\chapter{Conclusion and Recommendations}
+\section{Conclusion}
+The nylon-rope anaerobic filter is efficient and inexpensive.
+\section{Recommendations}
+Operation at low temperature should be studied.
+
+\printbibliography
+
+\appendix
+\appendixsection{Water Quality Analysis}
+
+\begin{table}[htbp]
+  \caption{Influent and effluent COD.}
+  \centering
+  \begin{tabular}{ccc}
+    \toprule
+    Day & Influent (mg/L) & Effluent (mg/L) \\
+    \midrule
+    1 & 2,450 & 380 \\
+    2 & 2,510 & 342 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\appendixsection{Data Sheets}
+
+Data sheets used in the research.
+
+\begin{vitae}
+  \vitaeitem{NAME}{Miss Sunwanee Jijai}
+  \vitaeitem{BIRTH DATE}{February 14, 1977}
+  \vitaeitem{BIRTH PLACE}{Bangkok, Thailand}
+  \vitaeitem{EDUCATION}{B.Eng. (Environmental Engineering), Kasetsart University, 1999}
+  \vitaeitem{POSITION/TITLE}{Engineer}
+  \vitaeitem{WORK PLACE}{Pollution Control Department}
+  \vitaeitem{SCHOLARSHIP/AWARDS}{Graduate School teaching assistantship (2004)}
+\end{vitae}
+
+\end{document}

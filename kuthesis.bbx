@@ -1,0 +1,421 @@
+%% kuthesis.bbx -- biblatex bibliography style for Kasetsart University
+%% theses (science track), after chapter 3 of the KU thesis manual (2553).
+%% Use with biber:  \usepackage[style=kuthesis]{biblatex}
+%%
+%% Copyright (C) 2026 Punpiti Piamsa-nga -- LPPL 1.3c or later.
+%%
+%% Thai entries are detected automatically (Thai characters in author or
+%% title) or by langid = {thai}. They are
+%%   * listed before English entries, sorted by given name then family name;
+%%   * cited by given name: (สมศรี, 2552), สมศรี และ กาญจเนศ (2552),
+%%     นภาพร และคณะ (2551);
+%%   * written with Thai words: และ, ใน, น., บรรณาธิการ, พิมพ์ครั้งที่,
+%%     แหล่งที่มา, ม.ป.ป., ม.ป.ท.
+%% Write Thai years as they appear on the document (พ.ศ.).
+\ProvidesFile{kuthesis.bbx}[2026/11/13 v0.1 KU thesis bibliography style]
+
+\RequireBibliographyStyle{authoryear}
+
+\ExecuteBibliographyOptions{
+  maxbibnames=999, minbibnames=999,
+  maxcitenames=2, mincitenames=1,
+  uniquename=false, uniquelist=false,
+  dashed=false, sorting=kuthesis, sortcites=true,
+  labeldateparts=true, date=year,
+  isbn=false, url=false, doi=false, eprint=false,
+  mergedate=basic,
+}
+
+% ---------------------------------------------------------------------------
+% Language detection and sorting
+% ---------------------------------------------------------------------------
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    % normalise langid = th -> thai
+    \map[overwrite=true]{
+      \step[fieldsource=langid, match=\regexp{\Ath\Z}, final]
+      \step[fieldset=langid, fieldvalue={thai}]
+    }
+    % detect Thai script (an explicit langid is never overwritten)
+    \map{
+      \step[fieldsource=author, match=\regexp{\p{Thai}}, final]
+      \step[fieldset=langid, fieldvalue={thai}]
+    }
+    \map{
+      \step[fieldsource=editor, match=\regexp{\p{Thai}}, final]
+      \step[fieldset=langid, fieldvalue={thai}]
+    }
+    \map{
+      \step[fieldsource=title, match=\regexp{\p{Thai}}, final]
+      \step[fieldset=langid, fieldvalue={thai}]
+    }
+    % Thai entries first (presort 1 < 5; note: biber treats "0" as unset)
+    \map{
+      \step[fieldsource=langid, match=\regexp{\Athai\Z}, final]
+      \step[fieldset=presort, fieldvalue={1}]
+    }
+    \map[overwrite=true]{
+      \step[fieldsource=langid, match=\regexp{\Athai\Z}, final]
+      \step[fieldsource=options, final]
+      \step[fieldset=options, fieldvalue={,sortingnamekeytemplatename=kuthai}, append]
+    }
+    \map{
+      \step[fieldsource=langid, match=\regexp{\Athai\Z}, final]
+      \step[fieldset=options, fieldvalue={sortingnamekeytemplatename=kuthai}]
+    }
+    \map{
+      \step[fieldset=presort, fieldvalue={5}]
+    }
+  }
+}
+
+% Thai names sort by given name, then family name
+\DeclareSortingNamekeyTemplate[kuthai]{
+  \keypart{\namepart{given}}
+  \keypart{\namepart{family}}
+}
+
+\DeclareSortingTemplate{kuthesis}{
+  \sort{\field{presort}}
+  \sort[final]{\field{sortkey}}
+  \sort{\field{sortname}\field{author}\field{editor}\field{sorttitle}\field{title}}
+  \sort{\field{sortyear}\field{year}}
+  \sort{\field{sorttitle}\field{title}}
+}
+
+% ---------------------------------------------------------------------------
+% Helpers
+% ---------------------------------------------------------------------------
+\newcommand*{\kuifthai}{\iffieldequalstr{langid}{thai}}
+
+\def\ku@bibthaialph#1{\ifcase#1\or ก\or ข\or ค\or ง\or จ\or ฉ\or ช\or ซ\or
+  ฌ\or ญ\or ฎ\or ฏ\or ฐ\or ฑ\or ฒ\or ณ\or ด\or ต\or ถ\or ท\fi}
+\def\ku@bibthaimonth#1{\ifcase#1\or มกราคม\or กุมภาพันธ์\or มีนาคม\or เมษายน\or
+  พฤษภาคม\or มิถุนายน\or กรกฎาคม\or สิงหาคม\or กันยายน\or ตุลาคม\or
+  พฤศจิกายน\or ธันวาคม\fi}
+\def\ku@bibenmonth#1{\ifcase#1\or January\or February\or March\or April\or
+  May\or June\or July\or August\or September\or October\or November\or
+  December\fi}
+
+% true if the field holds a range ("111-126" -> 111\bibrangedash 126)
+\newcommand*{\ku@ifrange}[1]{%
+  \iffieldundef{#1}{\@secondoftwo}{%
+    \expandafter\expandafter\expandafter\ku@ifrange@
+    \csname abx@field@#1\endcsname\bibrangedash\ku@end}}
+\def\ku@ifrange@#1\bibrangedash#2\ku@end{\ifblank{#2}{\@secondoftwo}{\@firstoftwo}}
+
+% Plain hyphen in page ranges, as in the manual's examples
+\renewcommand*{\bibrangedash}{-}
+\renewcommand*{\bibinitdelim}{}
+\renewcommand*{\bibinitperiod}{\adddot}
+\renewcommand*{\revsdnamepunct}{\addcomma}
+\DefineBibliographyExtras{english}{%
+  \let\finalandcomma\empty
+  \renewcommand*{\bibrangedash}{-}}
+\AtBeginDocument{\urlstyle{same}}
+% Ragged right: Thai lines have few break points, justification leaves gaps
+\AtBeginBibliography{\rightskip0pt plus 4em\relax\XeTeXlinebreakskip0pt\relax}
+
+% ---------------------------------------------------------------------------
+% Names
+%   English bibliography: "Peterson, R.L., H.B. Massicotte and L.H. Melville"
+%   Thai bibliography:    "สิริยาภรณ์ ไกรมาก, ปรารถนา ปรารถนาดี และ จิรชัย พุทธกุลสมศิริ"
+% ---------------------------------------------------------------------------
+\DeclareDelimFormat{multinamedelim}{\addcomma\space}
+\DeclareDelimFormat{finalnamedelim}{%
+  \kuifthai{\addspace และ\space}{\addspace and\space}}
+\DeclareDelimFormat{andothersdelim}{\addspace}
+
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }
+    {\printdelim{andothersdelim}%
+     \kuifthai{และคณะ}{et\addabbrvspace al\adddot}}
+    {}}
+
+\DeclareNameFormat{ku:bib}{%
+  \kuifthai
+    {\usebibmacro{name:given-family}
+       {\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}}
+    {\ifnumequal{\value{listcount}}{1}
+       {\usebibmacro{name:family-given}
+          {\namepartfamily}{\namepartgiveni}{\namepartprefix}{\namepartsuffix}}
+       {\usebibmacro{name:given-family}
+          {\namepartfamily}{\namepartgiveni}{\namepartprefix}{\namepartsuffix}}}%
+  \usebibmacro{name:andothers}}
+
+\DeclareNameFormat{ku:editor}{%
+  \kuifthai
+    {\usebibmacro{name:given-family}
+       {\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}}
+    {\usebibmacro{name:given-family}
+       {\namepartfamily}{\namepartgiveni}{\namepartprefix}{\namepartsuffix}}%
+  \usebibmacro{name:andothers}}
+
+% Citation label: Thai -> given name, English -> family name.
+% Corporate (braced) names are printed in full.
+\DeclareNameFormat{ku:cite}{%
+  \kuifthai
+    {\ifdefvoid{\namepartgiven}{\namepartfamily}{\namepartgiven}}
+    {\usebibmacro{name:family}
+       {\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}}%
+  \usebibmacro{name:andothers}}
+
+\DeclareNameAlias{author}{ku:bib}
+\DeclareNameAlias{sortname}{ku:bib}
+\DeclareNameAlias{editor}{ku:editor}
+\DeclareNameAlias{labelname}{ku:cite}
+
+% ---------------------------------------------------------------------------
+% Field formats (no italics or quotation marks; standalone works in bold)
+% ---------------------------------------------------------------------------
+\DeclareFieldFormat*{title}{#1}
+\DeclareFieldFormat*{booktitle}{\mkbibbold{#1}}
+\DeclareFieldFormat*{journaltitle}{\mkbibbold{#1}}
+\DeclareFieldFormat*{pages}{\mknormrange{#1}}
+\DeclareFieldFormat
+  [book,mvbook,thesis,report,online,misc,manual,booklet,patent,unpublished,
+   proceedings,mvproceedings,collection,mvcollection,dataset,software]
+  {title}{\mkbibbold{#1}}
+\DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{volume}{#1}
+\DeclareFieldFormat{number}{#1}
+\DeclareFieldFormat{ku:pages}{\mknormrange{#1}}
+\DeclareFieldFormat{url}{\url{#1}}
+\DeclareFieldFormat{doi}{doi:\addspace\href{https://doi.org/#1}{\nolinkurl{#1}}}
+\DeclareFieldFormat{extradate}{%
+  \kuifthai{\ku@bibthaialph{#1}}{\mkbibalph{#1}}}
+\DeclareFieldFormat{pagetotal}{%
+  \kuifthai{#1\addspace หน้า}{#1\addspace p\adddot}}
+
+% ---------------------------------------------------------------------------
+% Building blocks
+% ---------------------------------------------------------------------------
+\newbibmacro*{ku:year}{%
+  \iffieldundef{labelyear}
+    {\printtext{\kuifthai{ม.ป.ป.}{n.d.}}}
+    {\printtext{\printfield{labelyear}\printfield{extradate}}}}
+
+\newbibmacro*{ku:author+year}{%
+  \ifnameundef{author}
+    {\ifnameundef{editor}
+       {\printfield{title}\clearfield{title}}
+       {\printnames{editor}%
+        \setunit{\addcomma\space}%
+        \usebibmacro{ku:edstring}}}
+    {\printnames{author}}%
+  \setunit{\addperiod\space}%
+  \usebibmacro{ku:year}%
+  \newunit\newblock}
+
+\newbibmacro*{ku:edstring}{%
+  \printtext{%
+    \kuifthai
+      {บรรณาธิการ}
+      {\ifnumgreater{\value{editor}}{1}{eds\adddot}{ed\adddot}}}}
+
+\newbibmacro*{ku:edition}{%
+  \iffieldundef{edition}{}{%
+    \iffieldint{edition}
+      {\printtext{%
+         \kuifthai
+           {พิมพ์ครั้งที่\addspace\thefield{edition}}
+           {\mkbibordinal{\thefield{edition}}\addspace ed\adddot}}}
+      {\printtext{\thefield{edition}}}}}
+
+\newbibmacro*{ku:publisher+location}{%
+  \iflistundef{publisher}
+    {\iflistundef{organization}
+       {\iflistundef{institution}
+          {\printtext{\kuifthai{ม.ป.ท.}{n.p.}}}
+          {\printlist{institution}}}
+       {\printlist{organization}}}
+    {\printlist{publisher}}%
+  \setunit{\addcomma\space}%
+  \printlist{location}}
+
+\newbibmacro*{ku:pages}{%
+  \iffieldundef{pages}{}{%
+    \printtext{%
+      \kuifthai
+        {น.\addspace}
+        {\ku@ifrange{pages}{pp\adddot\addspace}{p\adddot\addspace}}}%
+    \printfield[ku:pages]{pages}}}
+
+\newbibmacro*{ku:in}{%
+  \printtext{\kuifthai{ใน}{In}}\setunit{\addspace}%
+  \ifnameundef{editor}{}{%
+    \printnames{editor}%
+    \setunit{\addcomma\space}%
+    \usebibmacro{ku:edstring}%
+    \newunit}}
+
+\newbibmacro*{ku:urldate}{%
+  \iffieldundef{urlyear}{}{%
+    \kuifthai
+      {\iffieldundef{urlday}{}{\thefield{urlday}\addspace}%
+       \iffieldundef{urlmonth}{}{\ku@bibthaimonth{\thefield{urlmonth}}\addspace}%
+       \the\numexpr\thefield{urlyear}+543\relax}
+      {\iffieldundef{urlmonth}{}{\ku@bibenmonth{\thefield{urlmonth}}\addspace}%
+       \iffieldundef{urlday}{}{\thefield{urlday}\addcomma\addspace}%
+       \thefield{urlyear}}}}
+
+\newbibmacro*{ku:url}{%
+  \iffieldundef{url}{}{%
+    \printtext{\kuifthai{แหล่งที่มา:}{Available Source:}}\setunit{\addspace}%
+    \printfield{url}%
+    \iffieldundef{urlyear}{}{\setunit{\addcomma\space}\printtext{\usebibmacro{ku:urldate}}}}}
+
+\newbibmacro*{ku:tail}{%
+  \newunit\newblock
+  \iftoggle{bbx:doi}{\printfield{doi}}{}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \printfield{addendum}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}}
+
+% ---------------------------------------------------------------------------
+% Drivers
+% ---------------------------------------------------------------------------
+% ผู้เขียน. ปี. ชื่อบทความ. ชื่อวารสาร ปีที่ (ฉบับที่): หน้า.
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \newunit\newblock
+  \printfield{journaltitle}%
+  \setunit{\addspace}\printfield{volume}%
+  \setunit{\addspace}\printfield[parens]{number}%
+  \setunit{\addcolon\space}\printfield[ku:pages]{pages}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+
+% ผู้แต่ง. ปีที่พิมพ์. ชื่อหนังสือ. ครั้งที่พิมพ์. สำนักพิมพ์, สถานที่พิมพ์.
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \setunit{\addspace}\printfield{titleaddon}%
+  \newunit\newblock
+  \usebibmacro{ku:edition}%
+  \newunit\newblock
+  \usebibmacro{ku:publisher+location}%
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyAlias{mvbook}{book}
+\DeclareBibliographyAlias{collection}{book}
+\DeclareBibliographyAlias{mvcollection}{book}
+\DeclareBibliographyAlias{proceedings}{book}
+\DeclareBibliographyAlias{mvproceedings}{book}
+\DeclareBibliographyAlias{booklet}{book}
+\DeclareBibliographyAlias{manual}{book}
+
+% ผู้เขียนบท. ปี. ชื่อบท, น. x-y. ใน บรรณาธิการ, บรรณาธิการ. ชื่อหนังสือ. สำนักพิมพ์, สถานที่.
+\DeclareBibliographyDriver{incollection}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \setunit{\addcomma\space}%
+  \usebibmacro{ku:pages}%
+  \newunit\newblock
+  \usebibmacro{ku:in}%
+  \printfield{booktitle}%
+  \setunit{\addspace}\printfield{eventtitle}%
+  \setunit{\addspace}\printfield{eventdate}%
+  \newunit\newblock
+  \usebibmacro{ku:edition}%
+  \newunit\newblock
+  \usebibmacro{ku:publisher+location}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyAlias{inbook}{incollection}
+\DeclareBibliographyAlias{inproceedings}{incollection}
+\DeclareBibliographyAlias{inreference}{incollection}
+
+% ผู้เขียน. ปี. ชื่อวิทยานิพนธ์. ระดับวิทยานิพนธ์, ชื่อมหาวิทยาลัย.
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \newunit\newblock
+  \iffieldequalstr{type}{mathesis}
+    {\printtext{\kuifthai{วิทยานิพนธ์ปริญญาโท}{M.S. Thesis}}}
+    {\iffieldequalstr{type}{phdthesis}
+       {\printtext{\kuifthai{วิทยานิพนธ์ปริญญาเอก}{Ph.D. Thesis}}}
+       {\printfield{type}}}%
+  \setunit{\addcomma\space}%
+  \printlist{institution}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+
+% ผู้รายงาน. ปี. ชื่อรายงาน. ชื่อชุดและลำดับที่. หน่วยงาน, สถานที่. จำนวนหน้า.
+\DeclareBibliographyDriver{report}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \newunit\newblock
+  \printfield{series}%
+  \setunit{\addspace}%
+  \iffieldundef{type}{}{\printfield{type}\setunit{\addspace}}%
+  \printfield{number}%
+  \newunit\newblock
+  \iflistundef{institution}{}{%
+    \printlist{institution}\setunit{\addcomma\space}\printlist{location}}%
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+
+% ผู้เขียน. ปี. ชื่อเรื่อง. แหล่งที่มา: URL, วัน เดือน ปี ที่สืบค้น.
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \newunit\newblock
+  \printfield{howpublished}%
+  \newunit\newblock
+  \usebibmacro{ku:url}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{misc}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \newunit\newblock
+  \printfield{howpublished}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit{\addspace}\printfield{number}%
+  \newunit\newblock
+  \iflistundef{publisher}{}{\usebibmacro{ku:publisher+location}}%
+  \newunit\newblock
+  \usebibmacro{ku:url}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyAlias{unpublished}{misc}
+\DeclareBibliographyAlias{dataset}{misc}
+\DeclareBibliographyAlias{software}{misc}
+
+% ผู้ประดิษฐ์. ปี. ชื่อสิ่งประดิษฐ์. สิทธิบัตรเลขที่ ...
+\DeclareBibliographyDriver{patent}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ku:author+year}%
+  \printfield{title}%
+  \newunit\newblock
+  \printtext{\kuifthai{สิทธิบัตรเลขที่}{Patent No\adddot}}\setunit{\addspace}\printfield{number}%
+  \newunit\newblock
+  \printlist{location}%
+  \usebibmacro{ku:tail}%
+  \usebibmacro{finentry}}
+
+\endinput
