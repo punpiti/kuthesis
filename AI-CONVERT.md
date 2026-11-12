@@ -12,26 +12,54 @@ visible marker (`\kutodo{...}`, see below) and list it in your report. The stude
 
 ## 0. Inputs and workspace
 
+Two layouts are supported.
+
+**Markdown workspace mode** (created by the installer, see https://punpiti.github.io/kuthesis/):
+
 ```
-work/<student>/            # create one folder per thesis; never write into the repo root
-  draft.docx               # the student's draft (or draft.md / draft.txt)
-  references.bib           # optional: from Zotero/Mendeley/EndNote
-  figures/                 # optional: original image files
-```
-
-Requirements: XeLaTeX + biber + latexmk, pandoc, and TH Sarabun New (installed, or the four
-`.ttf` files in `kuthesis/fonts/`). If anything is missing, follow `AI-SETUP.md` first.
-The work folder must contain copies of `kuthesis.cls`, `kuthesis.bbx`, `kuthesis.cbx`, `latexmkrc`
-and `logo/` (AI-SETUP.md creates them; copy them again after `git pull` so updates apply).
-
-## 1. Extract the draft
-
-```sh
-pandoc draft.docx -t markdown --wrap=none --extract-media=. -o draft.md
+thesis/
+  thesis.md          # the student's draft (Markdown)
+  figures/           # images referenced from thesis.md
+  references.bib     # optional (Zotero/Mendeley/EndNote export)
+  kuthesis/          # class, emblems, fonts (kuthesis/fonts/), this file
+  output/            # you write here: thesis.tex, references.bib, thesis.pdf
 ```
 
-Word equations become `$...$` / `$$...$$` LaTeX math, Word tables become pipe/grid tables, images
-are saved under `media/`. Read `draft.md` completely before writing anything.
+Before each build copy `kuthesis/kuthesis.cls`, `kuthesis.bbx`, `kuthesis.cbx`, `latexmkrc` and
+`kuthesis/logo/` into `output/`. Images: refer to them as `../figures/<file>` from
+`output/thesis.tex`. The class finds the Thai font in `../kuthesis/fonts/` by itself.
+
+**Repository mode** (a clone of this repository):
+
+```
+work/<student>/            # one folder per thesis; never write into the repo root
+  draft.docx | draft.md    # the student's draft
+  references.bib           # optional
+```
+
+Requirements: XeLaTeX + biber + latexmk, and TH Sarabun New (installed, or the four `.ttf` files in
+`kuthesis/fonts/` or the repository's `fonts/`). For `.docx` drafts also pandoc. If anything is
+missing, ask the student to run the installer (Markdown workspace) or follow `AI-SETUP.md`.
+In repository mode the work folder needs copies of `kuthesis.cls`, `kuthesis.bbx`, `kuthesis.cbx`,
+`latexmkrc` and `logo/`.
+
+## 1. Read the draft
+
+* **Markdown** (`thesis.md`, `draft.md`): read it directly. HTML comments `<!-- … -->` are
+  instructions for the student — ignore them. Headings are `#`…`####`; images are
+  `![ภาพที่ n คำบรรยาย](figures/file.png)` (the alt text is the caption); a line
+  `ตารางที่ n …` precedes each pipe table; equations are `$$…$$` LaTeX **or plain text** — convert
+  plain-text formulas to LaTeX math faithfully (same symbols and structure, no simplification).
+* **Word** (`draft.docx`):
+
+  ```sh
+  pandoc draft.docx -t markdown --wrap=none --extract-media=. -o draft.md
+  ```
+
+  Word equations become `$...$` / `$$...$$` LaTeX math, Word tables become pipe/grid tables,
+  images are saved under `media/`.
+
+Read the whole draft before writing anything.
 
 ## 2. Thesis information → class commands
 
@@ -154,7 +182,7 @@ Missing items use the marker command (define it in the preamble):
 ## 5. Build
 
 ```sh
-latexmk -xelatex thesis.tex
+latexmk -xelatex thesis.tex      # in output/ (workspace mode) or work/<student>/
 ```
 
 Fix every LaTeX error. Treat as errors too: undefined citations or references, `??` in the PDF,

@@ -80,20 +80,25 @@
 % ---------------------------------------------------------------------------
 \defaultfontfeatures{Ligatures=TeX}
 % The Thai font is used from the system if installed; otherwise from the
-% files THSarabunNew*.ttf in ./fonts/ (next to the thesis), ../../fonts/
+% files THSarabunNew*.ttf in fonts/, ../kuthesis/fonts/ (installer
+% workspace, building in output/), kuthesis/fonts/, ../fonts/, ../../fonts/
 % (repository root when building in work/<name>/), or anywhere kpathsea
 % finds them. No system-wide font installation is needed.
 \newif\ifku@thaibyfile
 \IfFontExistsTF{\ku@thaifontname}{}{\ku@thaibyfiletrue}
 \ifku@thaibyfile
   \def\ku@thaipath{}%
-  \IfFileExists{fonts/THSarabunNew.ttf}{\def\ku@thaipath{fonts/}}{%
-    \IfFileExists{../../fonts/THSarabunNew.ttf}{\def\ku@thaipath{../../fonts/}}{%
+  \def\ku@trypath#1{\IfFileExists{#1THSarabunNew.ttf}{\def\ku@thaipath{#1}\let\ku@tryrest\relax}{}}%
+  \let\ku@tryrest\@empty
+  \@for\ku@p:={fonts/,../kuthesis/fonts/,kuthesis/fonts/,../fonts/,../../fonts/}\do{%
+    \ifx\ku@tryrest\@empty\expandafter\ku@trypath\expandafter{\ku@p}\fi}%
+  \ifx\ku@tryrest\@empty
       \IfFileExists{THSarabunNew.ttf}{}{%
         \ClassError{kuthesis}{Thai font `\ku@thaifontname' not found}
           {Install TH Sarabun New, or copy THSarabunNew.ttf, THSarabunNew Bold.ttf,\MessageBreak
            THSarabunNew Italic.ttf and THSarabunNew BoldItalic.ttf into a folder\MessageBreak
-           named fonts/ next to your thesis (see AI-SETUP.md).}}}}
+           named fonts/ next to your thesis (see AI-SETUP.md).}}%
+  \fi
   \newcommand\ku@loadthai[2]{#1{THSarabunNew}[Path=\ku@thaipath, Extension=.ttf,
     UprightFont=*, BoldFont=* Bold, ItalicFont=* Italic, BoldItalicFont=* BoldItalic,
     Script=Thai, #2]}

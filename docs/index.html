@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kuthesis — วิทยานิพนธ์ มก.</title>
+<meta name="description" content="ติดตั้งด้วยคำสั่งเดียว เขียนวิทยานิพนธ์เป็น Markdown แล้วให้ AI จัดเล่ม PDF ตามคู่มือบัณฑิตวิทยาลัย มหาวิทยาลัยเกษตรศาสตร์ (สายวิทยาศาสตร์)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7; --surface: #ffffff; --ink: #1d2320; --muted: #5d6762;
+    --line: #e3e1da; --accent: #00663a; --accent-ink: #ffffff; --accent-soft: #e6f2ec;
+    --code-bg: #14201a; --code-ink: #e8f3ec; --warn: #8a5a00; --warn-soft: #fff4dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101513; --surface: #171d1a; --ink: #e7ece9; --muted: #a2ada7;
+      --line: #2a332e; --accent: #4cc38a; --accent-ink: #08130d; --accent-soft: #16261e;
+      --code-bg: #0b100d; --code-ink: #dff0e6; --warn: #f0c060; --warn-soft: #2a2312;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 18px/1.7 "Sarabun", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  header { border-bottom: 1px solid var(--line); background: var(--surface); }
+  header .wrap { display: flex; align-items: center; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
+  header img { width: 40px; height: 40px; }
+  header strong { font-size: 20px; }
+  header nav { margin-left: auto; font-size: 16px; }
+  .hero { padding: 48px 0 24px; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); line-height: 1.25; margin: 0 0 12px; }
+  .hero p { color: var(--muted); margin: 0; max-width: 46em; overflow-wrap: anywhere; }
+  .steps { list-style: none; padding: 0; margin: 32px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .steps > li {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 6px 14px; min-width: 0;
+  }
+  .num {
+    grid-row: span 2; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); font-weight: 700;
+    display: grid; place-items: center; font-size: 20px;
+  }
+  .steps h2 { margin: 2px 0 0; font-size: 22px; line-height: 1.4; }
+  .steps .body { min-width: 0; }
+  .tabs { display: flex; gap: 6px; margin: 10px 0 0; flex-wrap: wrap; }
+  .tabs button {
+    font: inherit; font-size: 15px; border: 1px solid var(--line); background: transparent;
+    color: var(--ink); padding: 4px 12px; border-radius: 999px; cursor: pointer;
+  }
+  .tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .cmd {
+    position: relative; margin-top: 10px; background: var(--code-bg); color: var(--code-ink);
+    border-radius: 10px; padding: 14px 92px 14px 16px; overflow-x: auto;
+    font: 15px/1.5 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; white-space: pre;
+  }
+  .cmd button {
+    position: absolute; top: 9px; right: 9px; font: 14px "Sarabun", sans-serif;
+    border: 0; border-radius: 8px; padding: 4px 12px; cursor: pointer;
+    background: var(--accent); color: var(--accent-ink);
+  }
+  .hint { color: var(--muted); font-size: 16px; margin: 8px 0 0; }
+  code.i { background: var(--accent-soft); padding: 1px 6px; border-radius: 6px; font-size: 0.9em; }
+  section { margin: 44px 0; }
+  section h2 { font-size: 26px; margin: 0 0 12px; }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  .card { min-width: 0; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 20px; }
+  .card p, .card ul { margin: 6px 0; }
+  .pages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .pages a { display: block; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
+  .pages img { display: block; width: 100%; height: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 16px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .note { background: var(--warn-soft); color: var(--ink); border-left: 4px solid var(--warn); padding: 12px 16px; border-radius: 8px; font-size: 16px; }
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 10px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; padding: 24px 0 40px; margin-top: 56px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 640px) {
+    body { font-size: 17px; }
+    .two { grid-template-columns: minmax(0, 1fr); }
+    .pages { grid-template-columns: repeat(2, 1fr); }
+    .steps > li { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+    .num { grid-row: auto; }
+    header nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img src="img/logo.png" alt="">
+    <strong>kuthesis</strong>
+    <nav><a href="https://github.com/punpiti/kuthesis">GitHub</a> · <a href="example-th.pdf">ตัวอย่างเล่ม PDF</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>เขียนวิทยานิพนธ์ มก.<br>ให้ AI จัดเล่มตามคู่มือ</h1>
+    <p>ติดตั้งด้วยคำสั่งเดียว เขียนเนื้อหาเป็นไฟล์ข้อความธรรมดา (Markdown) แล้วสั่ง AI ว่า “สร้าง PDF”
+      ได้เล่มที่จัดหน้า ระยะขอบ หัวข้อ สารบัญ และเอกสารอ้างอิงตาม <em>คู่มือการพิมพ์วิทยานิพนธ์ สายวิทยาศาสตร์</em>
+      ของบัณฑิตวิทยาลัย</p>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <span class="num">1</span>
+      <h2>ติดตั้ง (ครั้งเดียว)</h2>
+      <div class="body">
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-os="win">Windows</button>
+          <button role="tab" aria-selected="false" data-os="unix">macOS / Linux</button>
+        </div>
+        <div data-pane="win">
+          <p class="hint">เปิด <b>PowerShell</b> (กดปุ่ม Windows พิมพ์ PowerShell) วางคำสั่งนี้แล้วกด Enter</p>
+          <div class="cmd"><button type="button">คัดลอก</button>irm https://raw.githubusercontent.com/punpiti/kuthesis/main/install.ps1 | iex</div>
+        </div>
+        <div data-pane="unix" hidden>
+          <p class="hint">เปิด <b>Terminal</b> วางคำสั่งนี้แล้วกด Enter</p>
+          <div class="cmd"><button type="button">คัดลอก</button>curl -fsSL https://raw.githubusercontent.com/punpiti/kuthesis/main/install.sh | bash</div>
+        </div>
+        <p class="hint">ครั้งแรกใช้เวลาประมาณ 5–15 นาที ระบบติดตั้งเฉพาะสิ่งที่ยังไม่มี และสร้างโฟลเดอร์
+          <code class="i">thesis</code> (Windows: ใน Documents, macOS/Linux: ใน home) จากนั้นทดลองสร้าง PDF ให้ดูว่าใช้ได้</p>
+      </div>
+    </li>
+    <li>
+      <span class="num">2</span>
+      <h2>เขียน <code class="i">thesis/thesis.md</code></h2>
+      <div class="body">
+        <p class="hint" style="margin-top:2px">เปิดด้วยโปรแกรมแก้ข้อความใดก็ได้ (แนะนำ <a href="https://code.visualstudio.com/">VS Code</a> มีหน้าตัวอย่างให้ดู)
+          ในไฟล์มีหัวข้อครบตามคู่มือและวิธีเขียนอยู่ด้านบน เช่น</p>
+        <div class="cmd" style="padding-right:16px"># คำนำ
+
+ผีเสื้อจัดเป็นแมลงในอันดับ Lepidoptera ... Toole (2002) กล่าวว่า ...
+(พิสุทธิ์, 2527)
+
+![ภาพที่ 1 วงจรชีวิตของผีเสื้อ](figures/lifecycle.png)</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">3</span>
+      <h2>สั่ง AI ว่า “สร้าง PDF”</h2>
+      <div class="body">
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-os="win">Windows</button>
+          <button role="tab" aria-selected="false" data-os="unix">macOS / Linux</button>
+        </div>
+        <div data-pane="win">
+          <div class="cmd"><button type="button">คัดลอก</button>cd "$([Environment]::GetFolderPath('MyDocuments'))\thesis"; claude</div>
+        </div>
+        <div data-pane="unix" hidden>
+          <div class="cmd"><button type="button">คัดลอก</button>cd ~/thesis &amp;&amp; claude</div>
+        </div>
+        <p class="hint">พิมพ์ <b>สร้าง PDF</b> จะได้ <code class="i">thesis/output/thesis.pdf</code> พร้อมรายงานสิ่งที่ต้องแก้
+          (เช่น อ้างอิงที่ไม่อยู่ในรายการ) ซึ่งแสดงเป็นตัวแดงใน PDF — แก้ใน thesis.md แล้วสั่งใหม่ได้เรื่อย ๆ
+          ครั้งแรก Claude Code จะให้เข้าสู่ระบบด้วยบัญชี Claude</p>
+      </div>
+    </li>
+  </ol>
+
+  <section>
+    <h2>เลือกได้สองทาง</h2>
+    <div class="two">
+      <div class="card">
+        <h3>ทางที่ 1 · Markdown + AI</h3>
+        <p>เขียน <code class="i">thesis.md</code> แบบข้อความธรรมดา ภาพไว้ใน <code class="i">figures/</code>
+          อ้างอิงแบบ (ชื่อ, ปี) รายการเอกสารอ้างอิงพิมพ์ธรรมดาได้</p>
+        <p>AI <b>จัดรูปแบบอย่างเดียว ไม่แก้ถ้อยคำ</b> ของนิสิต</p>
+      </div>
+      <div class="card">
+        <h3>ทางที่ 2 · เขียน LaTeX เอง</h3>
+        <p>แก้ <code class="i">thesis/latex/thesis.tex</code> (เป็นตัวอย่างเล่มเต็มให้แก้ต่อ) แล้วสร้าง PDF ด้วย</p>
+        <div class="cmd" style="padding-right:16px">cd thesis/latex
+latexmk thesis</div>
+        <p class="hint">ไม่ต้องใช้ AI · รายละเอียดคำสั่งอยู่ใน <a href="https://github.com/punpiti/kuthesis#readme">README</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ตัวอย่างผลลัพธ์</h2>
+    <div class="pages">
+      <a href="example-th.pdf"><img src="img/page-1.png" alt="ปกนอก" loading="lazy"></a>
+      <a href="example-th.pdf"><img src="img/page-3.png" alt="ปกใน" loading="lazy"></a>
+      <a href="example-th.pdf"><img src="img/page-11.png" alt="หน้าคำนำ" loading="lazy"></a>
+      <a href="example-th.pdf"><img src="img/page-18.png" alt="เอกสารและสิ่งอ้างอิง" loading="lazy"></a>
+    </div>
+    <p class="hint">ระยะขอบวัดถึงฐานตัวอักษรตามคู่มือ (บน 1.5 นิ้ว ล่าง 1 นิ้ว เลขหน้าห่างขอบบน 1 นิ้ว)
+      และตรวจเทียบกับตัวอย่างในภาคผนวกของคู่มือแล้ว · <a href="example-th.pdf">เปิด PDF ตัวอย่าง</a></p>
+  </section>
+
+  <section>
+    <h2>สิ่งที่ติดตั้ง</h2>
+    <table>
+      <tr><th>โปรแกรม</th><th>ใช้ทำอะไร</th></tr>
+      <tr><td>TinyTeX + แพ็กเกจ LaTeX</td><td>สร้าง PDF (ติดตั้งเฉพาะผู้ใช้ ข้ามถ้ามี TeX อยู่แล้ว)</td></tr>
+      <tr><td>ฟอนต์ TH Sarabun New</td><td>เก็บไว้ในโฟลเดอร์ <code class="i">thesis/kuthesis/fonts</code> ไม่ต้องติดตั้งเข้าระบบ · ตรวจ checksum ก่อนใช้</td></tr>
+      <tr><td>Claude Code</td><td>AI สำหรับทางที่ 1 (ข้ามถ้ามี Claude Code, Codex หรือ Gemini CLI อยู่แล้ว · Windows ติดตั้ง Git ให้ด้วยเพราะ Claude Code ต้องใช้)</td></tr>
+      <tr><td>kuthesis</td><td>class, ตรามหาวิทยาลัย, คำสั่งสำหรับ AI — รันคำสั่งติดตั้งซ้ำเพื่ออัปเดต ไฟล์ที่เขียนไว้ไม่ถูกแตะ</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>คำถามที่พบบ่อย</h2>
+    <details>
+      <summary>ทำไมไม่ใช้ฟอนต์ตามคู่มือ</summary>
+      <p>ฟอนต์ที่คู่มือกำหนด (AngsanaUPC, BrowalliaUPC, CordiaUPC ฯลฯ และ Times New Roman) เป็นฟอนต์มีลิขสิทธิ์
+        kuthesis ใช้ฟอนต์ฟรีที่ถูกกฎหมายแทน: <b>TH Sarabun New</b> (ฟอนต์แห่งชาติ) สำหรับภาษาไทย และ
+        <b>TeX Gyre Termes</b> ซึ่งขนาดและความกว้างเท่า Times New Roman สำหรับภาษาอังกฤษ</p>
+    </details>
+    <details>
+      <summary>ต้องเสียเงินไหม</summary>
+      <p>kuthesis และโปรแกรมทั้งหมดฟรี ยกเว้น AI: Claude Code ต้องใช้บัญชี Claude (มีแบบเสียค่าบริการ)
+        ถ้ามี Codex หรือ Gemini CLI อยู่แล้วก็ใช้แทนได้ หรือเลือกทางที่ 2 ซึ่งไม่ใช้ AI เลย</p>
+    </details>
+    <details>
+      <summary>ข้อมูลวิทยานิพนธ์ถูกส่งไปที่ไหน</summary>
+      <p>ไฟล์ทั้งหมดอยู่ในเครื่อง แต่เมื่อใช้ AI เนื้อหาที่ AI อ่านจะถูกส่งไปประมวลผลที่ผู้ให้บริการ AI
+        ตามนโยบายข้อมูลของบริการนั้น ถ้างานยังเป็นความลับให้ปรึกษาอาจารย์ที่ปรึกษาก่อน หรือใช้ทางที่ 2</p>
+    </details>
+    <details>
+      <summary>ใช้แทนแบบฟอร์มทางการได้ไหม</summary>
+      <p>kuthesis ไม่ใช่เอกสารทางการของมหาวิทยาลัย ใบรับรองวิทยานิพนธ์และบทคัดย่อจัดตามตัวอย่างในคู่มือ
+        บัณฑิตวิทยาลัยอาจกำหนดให้ใช้แบบฟอร์มทางการ โปรดตรวจข้อกำหนดล่าสุดก่อนส่งเล่ม</p>
+    </details>
+    <details>
+      <summary>ติดตั้งไม่สำเร็จ</summary>
+      <p>ดูไฟล์ <code class="i">thesis/install.log</code> แล้วรันคำสั่งติดตั้งใหม่ (รันซ้ำได้ปลอดภัย)
+        หรือแจ้งปัญหาที่ <a href="https://github.com/punpiti/kuthesis/issues">GitHub Issues</a></p>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    kuthesis — ไม่ใช่เอกสารทางการของมหาวิทยาลัยเกษตรศาสตร์ ·
+    class และ style เผยแพร่ภายใต้ LPPL 1.3c · ตรามหาวิทยาลัยเป็นเครื่องหมายของมหาวิทยาลัยเกษตรศาสตร์ ·
+    <a href="https://github.com/punpiti/kuthesis">github.com/punpiti/kuthesis</a>
+  </div>
+</footer>
+
+<script>
+  // OS tabs: one choice applies to every step; remember it
+  const panes = document.querySelectorAll('[data-pane]');
+  const tabs = document.querySelectorAll('[data-os]');
+  function choose(os) {
+    tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.os === os)));
+    panes.forEach(p => { p.hidden = p.dataset.pane !== os; });
+    try { localStorage.setItem('kuthesis-os', os); } catch (e) {}
+  }
+  tabs.forEach(t => t.addEventListener('click', () => choose(t.dataset.os)));
+  let os = null;
+  try { os = localStorage.getItem('kuthesis-os'); } catch (e) {}
+  if (!os) os = /Win/i.test(navigator.platform || navigator.userAgent) ? 'win' : 'unix';
+  choose(os);
+
+  // copy buttons
+  document.querySelectorAll('.cmd button').forEach(b => {
+    b.addEventListener('click', async () => {
+      const text = b.parentElement.textContent.replace(b.textContent, '').trim();
+      try { await navigator.clipboard.writeText(text); b.textContent = 'คัดลอกแล้ว ✓'; }
+      catch (e) { b.textContent = 'เลือกข้อความแล้วคัดลอก'; }
+      setTimeout(() => { b.textContent = 'คัดลอก'; }, 1800);
+    });
+  });
+</script>
+</body>
+</html>

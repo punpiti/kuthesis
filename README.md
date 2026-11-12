@@ -7,32 +7,40 @@
 > **ไม่ใช่เอกสารทางการของมหาวิทยาลัย** — โปรดตรวจกับข้อกำหนดล่าสุดของบัณฑิตวิทยาลัย
 > และแบบฟอร์มทางการ (ใบรับรองวิทยานิพนธ์, บทคัดย่อ) ก่อนส่งเล่มจริง
 
-## เริ่มต้นแบบง่าย: เขียนใน Word แล้วให้ AI จัดเล่มให้
+## เริ่มต้นใช้งาน — https://punpiti.github.io/kuthesis/
 
-ไม่ต้องเขียน LaTeX และไม่ต้องติดตั้งโปรแกรมเอง มีแค่ AI agent ก็พอ
-(เช่น [Claude Code](https://claude.com/claude-code) ใน terminal หรือใน VS Code, หรือ Codex)
+**1. ติดตั้ง (ครั้งเดียว)** วางคำสั่งนี้ใน PowerShell (Windows) หรือ Terminal (macOS/Linux)
 
-**ครั้งแรก — ให้ AI ติดตั้งและสร้าง workspace ให้:** เปิด AI agent ในโฟลเดอร์ที่ต้องการ (เช่น Documents) แล้วพิมพ์
+```powershell
+irm https://raw.githubusercontent.com/punpiti/kuthesis/main/install.ps1 | iex
+```
 
-> อ่าน https://raw.githubusercontent.com/punpiti/kuthesis/main/AI-SETUP.md แล้วทำตาม
+```sh
+curl -fsSL https://raw.githubusercontent.com/punpiti/kuthesis/main/install.sh | bash
+```
 
-AI จะตรวจเครื่อง ขออนุญาตก่อนติดตั้ง แล้วลง TeX (TinyTeX), pandoc, git, ฟอนต์ TH Sarabun New
-และ VS Code extension จากนั้น clone repo นี้ สร้างโฟลเดอร์ `work/<ชื่อ>/` พร้อมไฟล์ Word ต้นแบบ
-และทดลองสร้าง PDF ให้ดูว่าใช้งานได้ ([รายละเอียด](AI-SETUP.md))
+สคริปต์ติดตั้งเฉพาะสิ่งที่ยังไม่มี ได้แก่ TinyTeX กับแพ็กเกจ LaTeX, ฟอนต์ TH Sarabun New (ตรวจ checksum
+และเก็บในโฟลเดอร์ ไม่ติดตั้งเข้าระบบ) และ Claude Code จากนั้นสร้างโฟลเดอร์ `thesis`
+(Windows: ใน Documents, macOS/Linux: ใน home) แล้วทดลองสร้าง PDF ให้ดู รันซ้ำเพื่ออัปเดตได้ ไฟล์ที่เขียนไว้ไม่ถูกแตะ
 
-**เขียน:** เปิด `work/<ชื่อ>/draft.docx` ใน Word หรือ Google Docs (export กลับเป็น .docx)
-แล้วเขียนตามกติกา 8 ข้อในหน้าแรกของไฟล์ เช่น ใช้ Heading ของ Word, อ้างอิงแบบ (ชื่อ, ปี),
-พิมพ์ “ภาพที่ 1 …” และ “ตารางที่ 1 …”
+```
+thesis/
+  thesis.md   figures/     ← ทางที่ 1: เขียน Markdown
+  output/                  ← AI สร้าง thesis.pdf ไว้ที่นี่
+  latex/                   ← ทางที่ 2: เขียน LaTeX เอง
+  kuthesis/                ← class, ตรา, ฟอนต์, คำสั่งสำหรับ AI
+```
 
-**สร้างเล่ม PDF (ทำกี่ครั้งก็ได้):** เปิด AI agent ในโฟลเดอร์ `kuthesis` แล้วพิมพ์
+**2. ทางที่ 1 — เขียน Markdown แล้วให้ AI จัดเล่ม:** แก้ `thesis/thesis.md` (มีหัวข้อตามคู่มือและวิธีเขียนอยู่ในไฟล์)
+แล้วเปิด AI CLI ในโฟลเดอร์ `thesis` (`claude`) พิมพ์ **สร้าง PDF** จะได้ `output/thesis.pdf`
+พร้อมรายงานจุดที่ต้องแก้ ซึ่งแสดงเป็นตัวแดง `[TODO: …]` ใน PDF
+AI ทำหน้าที่ **จัดรูปแบบอย่างเดียว ไม่แก้ถ้อยคำของนิสิต** (กติกาอยู่ใน [`AI-CONVERT.md`](AI-CONVERT.md))
 
-> อ่าน AI-CONVERT.md แล้วแปลง work/<ชื่อ>/draft.docx เป็น PDF ตามคู่มือวิทยานิพนธ์
+**ทางที่ 2 — เขียน LaTeX เอง (ไม่ใช้ AI):** แก้ `thesis/latex/thesis.tex` ซึ่งเป็นตัวอย่างเล่มเต็ม แล้วรัน
+`cd thesis/latex && latexmk thesis` (คำสั่งของคลาสอยู่ในหัวข้อ “การใช้งานย่อ” ด้านล่าง)
 
-จะได้ `work/<ชื่อ>/thesis.pdf` พร้อมรายงานจุดที่ต้องแก้ เช่น อ้างอิงที่ไม่อยู่ในรายการ หรือข้อมูลที่ยังไม่กรอก
-ซึ่งแสดงเป็นตัวแดง `[TODO: …]` ใน PDF ให้แก้ใน Word แล้วสั่งซ้ำ
-
-AI ทำหน้าที่ **จัดรูปแบบอย่างเดียว ไม่แก้ถ้อยคำของนิสิต** (กำหนดไว้ใน [`AI-CONVERT.md`](AI-CONVERT.md))
-โฟลเดอร์ `work/` อยู่ใน `.gitignore` ต้นฉบับของนิสิตจึงไม่ถูกส่งขึ้น GitHub ให้สำรองไฟล์เองใน OneDrive หรือ Google Drive
+**ทางเลือกอื่น:** เขียนใน Word ด้วย [`draft-template/thesis-draft-template.docx`](draft-template/thesis-draft-template.docx)
+แล้วให้ AI ติดตั้งตาม [`AI-SETUP.md`](AI-SETUP.md) และแปลงตาม `AI-CONVERT.md`
 
 ## ไฟล์
 
@@ -44,8 +52,11 @@ AI ทำหน้าที่ **จัดรูปแบบอย่างเ�
 | `example-en.tex` | ตัวอย่างเล่มภาษาอังกฤษ |
 | `references.bib` | ตัวอย่างรายการอ้างอิง (นำมาจากตัวอย่างในคู่มือ) |
 | `logo/` | ตรามหาวิทยาลัย (ไทย, อังกฤษ, สีเขียวสำหรับใบรับรอง) |
-| `draft-template/` | ไฟล์ Word ต้นแบบสำหรับนิสิตเขียนต้นฉบับ (`template.md` คือต้นฉบับของไฟล์ Word, `reference.docx` คือสไตล์ TH Sarabun New) |
-| `AI-SETUP.md` | คำสั่งสำหรับ AI agent ใช้ติดตั้งโปรแกรมและสร้าง workspace บนเครื่องนิสิต |
+| `draft-template/` | ต้นแบบต้นฉบับ: `thesis.md` (Markdown) และ `thesis-draft-template.docx` (Word) |
+| `install.ps1`, `install.sh` | สคริปต์ติดตั้งและสร้าง workspace (Windows / macOS, Linux) |
+| `workspace/` | `AGENTS.md`/`CLAUDE.md` ที่วางใน workspace ให้ AI CLI รู้ว่าต้องทำอะไร |
+| `docs/` | หน้าเว็บ GitHub Pages |
+| `AI-SETUP.md` | คำสั่งให้ AI agent ติดตั้งเอง (ทางเลือกแทนสคริปต์) |
 | `AI-CONVERT.md` | คำสั่งสำหรับ AI agent ใช้แปลงต้นฉบับ Word เป็นเล่ม PDF |
 | `.vscode/` | ตั้งค่า VS Code: build ด้วย XeLaTeX + biber และแนะนำ extension |
 
