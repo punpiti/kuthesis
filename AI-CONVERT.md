@@ -19,9 +19,10 @@ work/<student>/            # create one folder per thesis; never write into the 
   figures/                 # optional: original image files
 ```
 
-Requirements: XeLaTeX + biber (TeX Live ≥ 2023), pandoc ≥ 3, the TH Sarabun New font.
-Copy `kuthesis.cls`, `kuthesis.bbx`, `kuthesis.cbx`, `latexmkrc` and `logo/` into the work folder
-(or set `TEXINPUTS`).
+Requirements: XeLaTeX + biber + latexmk, pandoc, and TH Sarabun New (installed, or the four
+`.ttf` files in `kuthesis/fonts/`). If anything is missing, follow `AI-SETUP.md` first.
+The work folder must contain copies of `kuthesis.cls`, `kuthesis.bbx`, `kuthesis.cbx`, `latexmkrc`
+and `logo/` (AI-SETUP.md creates them; copy them again after `git pull` so updates apply).
 
 ## 1. Extract the draft
 

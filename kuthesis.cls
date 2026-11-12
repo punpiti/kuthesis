@@ -79,13 +79,34 @@
 %   16 pt (5.44 pt). The other fonts are scaled to the same x-height.
 % ---------------------------------------------------------------------------
 \defaultfontfeatures{Ligatures=TeX}
-\newfontfamily\ku@thaifamily{\ku@thaifontname}[Script=Thai,NFSSFamily=kuthai]
+% The Thai font is used from the system if installed; otherwise from the
+% files THSarabunNew*.ttf in ./fonts/ (next to the thesis), ../../fonts/
+% (repository root when building in work/<name>/), or anywhere kpathsea
+% finds them. No system-wide font installation is needed.
+\newif\ifku@thaibyfile
+\IfFontExistsTF{\ku@thaifontname}{}{\ku@thaibyfiletrue}
+\ifku@thaibyfile
+  \def\ku@thaipath{}%
+  \IfFileExists{fonts/THSarabunNew.ttf}{\def\ku@thaipath{fonts/}}{%
+    \IfFileExists{../../fonts/THSarabunNew.ttf}{\def\ku@thaipath{../../fonts/}}{%
+      \IfFileExists{THSarabunNew.ttf}{}{%
+        \ClassError{kuthesis}{Thai font `\ku@thaifontname' not found}
+          {Install TH Sarabun New, or copy THSarabunNew.ttf, THSarabunNew Bold.ttf,\MessageBreak
+           THSarabunNew Italic.ttf and THSarabunNew BoldItalic.ttf into a folder\MessageBreak
+           named fonts/ next to your thesis (see AI-SETUP.md).}}}}
+  \newcommand\ku@loadthai[2]{#1{THSarabunNew}[Path=\ku@thaipath, Extension=.ttf,
+    UprightFont=*, BoldFont=* Bold, ItalicFont=* Italic, BoldItalicFont=* BoldItalic,
+    Script=Thai, #2]}
+\else
+  \newcommand\ku@loadthai[2]{#1{\ku@thaifontname}[Script=Thai, #2]}
+\fi
+\ku@loadthai{\newfontfamily\ku@thaifamily}{NFSSFamily=kuthai}
 \edef\ku@thaifam{kuthai}
 
 \def\ku@tmp{sarabun}
 \ifx\ku@latin\ku@tmp
-  \setmainfont{\ku@thaifontname}[Script=Thai]
-  \setsansfont{\ku@thaifontname}[Script=Thai]
+  \ku@loadthai{\setmainfont}{}
+  \ku@loadthai{\setsansfont}{}
 \else\def\ku@tmp{termes}\ifx\ku@latin\ku@tmp
   \setmainfont{texgyretermes}[
     Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,

@@ -9,23 +9,30 @@
 
 ## เริ่มต้นแบบง่าย: เขียนใน Word แล้วให้ AI จัดเล่มให้
 
-ไม่ต้องเขียน LaTeX เอง
+ไม่ต้องเขียน LaTeX และไม่ต้องติดตั้งโปรแกรมเอง มีแค่ AI agent ก็พอ
+(เช่น [Claude Code](https://claude.com/claude-code) ใน terminal หรือใน VS Code, หรือ Codex)
 
-1. ดาวน์โหลด [`draft-template/thesis-draft-template.docx`](draft-template/thesis-draft-template.docx)
-   แล้วเขียนวิทยานิพนธ์ลงไปใน Word หรือ Google Docs (export เป็น .docx) ตามกติกา 8 ข้อในหน้าแรกของไฟล์
-   ได้แก่ ใช้ Heading ของ Word, อ้างอิงแบบ (ชื่อ, ปี), และพิมพ์ “ภาพที่ 1 …” / “ตารางที่ 1 …”
-2. ติดตั้งครั้งเดียว: [TeX Live](https://tug.org/texlive/), [pandoc](https://pandoc.org/) และฟอนต์ TH Sarabun New
-3. clone repo นี้ แล้ววางไฟล์ไว้ที่ `work/<ชื่อนิสิต>/draft.docx`
-   (ถ้ามีไฟล์ `.bib` จาก Zotero หรือ Mendeley วางไว้ในโฟลเดอร์เดียวกัน)
-4. เปิด AI agent เช่น Claude Code หรือ Codex ในโฟลเดอร์ repo แล้วสั่ง:
+**ครั้งแรก — ให้ AI ติดตั้งและสร้าง workspace ให้:** เปิด AI agent ในโฟลเดอร์ที่ต้องการ (เช่น Documents) แล้วพิมพ์
 
-   > อ่าน AI-CONVERT.md แล้วแปลง work/<ชื่อนิสิต>/draft.docx เป็น PDF ตามคู่มือวิทยานิพนธ์
+> อ่าน https://raw.githubusercontent.com/punpiti/kuthesis/main/AI-SETUP.md แล้วทำตาม
 
-5. ได้ `work/<ชื่อนิสิต>/thesis.pdf` พร้อมรายงานจาก AI ว่ามีจุดไหนต้องแก้ เช่น อ้างอิงที่ไม่อยู่ในรายการ
-   หรือข้อมูลที่ยังไม่กรอก (ระบบทำเป็นตัวแดง `[TODO: …]` ไว้ใน PDF) แก้ใน Word แล้วสั่งซ้ำได้
+AI จะตรวจเครื่อง ขออนุญาตก่อนติดตั้ง แล้วลง TeX (TinyTeX), pandoc, git, ฟอนต์ TH Sarabun New
+และ VS Code extension จากนั้น clone repo นี้ สร้างโฟลเดอร์ `work/<ชื่อ>/` พร้อมไฟล์ Word ต้นแบบ
+และทดลองสร้าง PDF ให้ดูว่าใช้งานได้ ([รายละเอียด](AI-SETUP.md))
+
+**เขียน:** เปิด `work/<ชื่อ>/draft.docx` ใน Word หรือ Google Docs (export กลับเป็น .docx)
+แล้วเขียนตามกติกา 8 ข้อในหน้าแรกของไฟล์ เช่น ใช้ Heading ของ Word, อ้างอิงแบบ (ชื่อ, ปี),
+พิมพ์ “ภาพที่ 1 …” และ “ตารางที่ 1 …”
+
+**สร้างเล่ม PDF (ทำกี่ครั้งก็ได้):** เปิด AI agent ในโฟลเดอร์ `kuthesis` แล้วพิมพ์
+
+> อ่าน AI-CONVERT.md แล้วแปลง work/<ชื่อ>/draft.docx เป็น PDF ตามคู่มือวิทยานิพนธ์
+
+จะได้ `work/<ชื่อ>/thesis.pdf` พร้อมรายงานจุดที่ต้องแก้ เช่น อ้างอิงที่ไม่อยู่ในรายการ หรือข้อมูลที่ยังไม่กรอก
+ซึ่งแสดงเป็นตัวแดง `[TODO: …]` ใน PDF ให้แก้ใน Word แล้วสั่งซ้ำ
 
 AI ทำหน้าที่ **จัดรูปแบบอย่างเดียว ไม่แก้ถ้อยคำของนิสิต** (กำหนดไว้ใน [`AI-CONVERT.md`](AI-CONVERT.md))
-โฟลเดอร์ `work/` อยู่ใน `.gitignore` ต้นฉบับของนิสิตจึงไม่ถูกส่งขึ้น GitHub
+โฟลเดอร์ `work/` อยู่ใน `.gitignore` ต้นฉบับของนิสิตจึงไม่ถูกส่งขึ้น GitHub ให้สำรองไฟล์เองใน OneDrive หรือ Google Drive
 
 ## ไฟล์
 
@@ -38,7 +45,9 @@ AI ทำหน้าที่ **จัดรูปแบบอย่างเ�
 | `references.bib` | ตัวอย่างรายการอ้างอิง (นำมาจากตัวอย่างในคู่มือ) |
 | `logo/` | ตรามหาวิทยาลัย (ไทย, อังกฤษ, สีเขียวสำหรับใบรับรอง) |
 | `draft-template/` | ไฟล์ Word ต้นแบบสำหรับนิสิตเขียนต้นฉบับ (`template.md` คือต้นฉบับของไฟล์ Word, `reference.docx` คือสไตล์ TH Sarabun New) |
+| `AI-SETUP.md` | คำสั่งสำหรับ AI agent ใช้ติดตั้งโปรแกรมและสร้าง workspace บนเครื่องนิสิต |
 | `AI-CONVERT.md` | คำสั่งสำหรับ AI agent ใช้แปลงต้นฉบับ Word เป็นเล่ม PDF |
+| `.vscode/` | ตั้งค่า VS Code: build ด้วย XeLaTeX + biber และแนะนำ extension |
 
 ## ฟอนต์: ใช้ฟอนต์ฟรีที่ถูกกฎหมายแทนฟอนต์ลิขสิทธิ์
 
