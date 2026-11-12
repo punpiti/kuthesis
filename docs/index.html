@@ -6,6 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>kuthesis — วิทยานิพนธ์ มก.</title>
 <meta name="description" content="ติดตั้งด้วยคำสั่งเดียว เขียนวิทยานิพนธ์เป็น Markdown แล้วให้ AI จัดเล่ม PDF ตามคู่มือบัณฑิตวิทยาลัย มหาวิทยาลัยเกษตรศาสตร์ (สายวิทยาศาสตร์)">
+<!-- Google Analytics (same property as urban.cpe.ku.ac.th) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BWX7PFH4XM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-BWX7PFH4XM", { anonymize_ip: true });
+</script>
 <link rel="canonical" href="https://punpiti.github.io/kuthesis/">
 <link rel="icon" type="image/png" href="img/logo.png">
 <meta property="og:type" content="website">
@@ -281,6 +289,7 @@ latexmk thesis</div>
   <div class="wrap">
     kuthesis © 2026 Punpiti Piamsa-nga · <a href="#license">MIT License</a> — แก้ไขต่อได้ โดยต้องคงชื่อผู้สร้างไว้ ·
     ไม่ใช่เอกสารทางการของมหาวิทยาลัยเกษตรศาสตร์ · ตรามหาวิทยาลัยเป็นเครื่องหมายของมหาวิทยาลัยเกษตรศาสตร์ ·
+    หน้านี้ใช้ Google Analytics (ไม่เก็บ IP เต็ม) เพื่อนับผู้เข้าชม ·
     <a href="https://github.com/punpiti/kuthesis">github.com/punpiti/kuthesis</a>
   </div>
 </footer>
@@ -304,6 +313,8 @@ latexmk thesis</div>
   document.querySelectorAll('.cmd button').forEach(b => {
     b.addEventListener('click', async () => {
       const text = b.parentElement.textContent.replace(b.textContent, '').trim();
+      const pane = b.closest('[data-pane]');
+      try { gtag('event', 'copy_command', { os: pane ? pane.dataset.pane : 'any', command: text.slice(0, 40) }); } catch (e) {}
       try { await navigator.clipboard.writeText(text); b.textContent = 'คัดลอกแล้ว ✓'; }
       catch (e) { b.textContent = 'เลือกข้อความแล้วคัดลอก'; }
       setTimeout(() => { b.textContent = 'คัดลอก'; }, 1800);
