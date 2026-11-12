@@ -1,5 +1,7 @@
 # kuthesis — LaTeX class for Kasetsart University theses (science track)
 
+[![kuthesis — เครื่องมือช่วยจัดรูปเล่มวิทยานิพนธ์ ม.เกษตรศาสตร์](docs/img/og.jpg)](https://punpiti.github.io/kuthesis/)
+
 คลาส LaTeX สำหรับวิทยานิพนธ์ **สายวิทยาศาสตร์ มหาวิทยาลัยเกษตรศาสตร์** จัดรูปแบบตาม
 *คู่มือการพิมพ์วิทยานิพนธ์ สายวิทยาศาสตร์* (บัณฑิตวิทยาลัย มก., พ.ศ. 2553)
 โดยใช้ฟอนต์ฟรี: **TH Sarabun New** (ไทย) + **TeX Gyre Termes** (อังกฤษ — ฟอนต์ฟรีที่ขนาดและความกว้างเท่า Times New Roman ตามที่คู่มือกำหนด) + **TeX Gyre Termes Math** (คณิตศาสตร์)
