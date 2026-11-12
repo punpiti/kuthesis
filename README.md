@@ -217,6 +217,8 @@ xelatex example-th && biber example-th && xelatex example-th && xelatex example-
 
 ## License
 
+Copyright (C) 2026 Punpiti Piamsa-nga.
+
 LaTeX Project Public License 1.3c or later (see `LICENSE`).
 
 ---

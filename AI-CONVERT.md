@@ -208,3 +208,7 @@ can rebuild after editing the draft.
 
 Rebuild from the new draft, but reuse the existing `references.bib` keys so citations stay
 stable. Mention what changed since the previous build.
+
+---
+
+<sub>kuthesis — Copyright (C) 2026 Punpiti Piamsa-nga. Licensed under the LaTeX Project Public License 1.3c or later (see LICENSE).</sub>

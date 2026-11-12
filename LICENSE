@@ -12,7 +12,12 @@ This work has the LPPL maintenance status `maintained'.
 The Current Maintainer of this work is Punpiti Piamsa-nga.
 
 This work consists of the files kuthesis.cls, kuthesis.bbx, kuthesis.cbx,
-example-th.tex, example-en.tex and references.bib.
+example-th.tex, example-en.tex, references.bib, latexmkrc, install.sh,
+install.ps1, AI-CONVERT.md, AI-SETUP.md, workspace/AGENTS.md,
+workspace/CLAUDE.md, draft-template/*, docs/index.html and .vscode/*.
+
+The thesis templates in draft-template/ may be filled in and used freely;
+the text a student writes into them belongs to the student.
 
 This is not an official publication of Kasetsart University.
 

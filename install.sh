@@ -15,6 +15,11 @@
 #   KUTHESIS_SRC=/path/repo    use a local copy of the repository (testing)
 #   KUTHESIS_FORCE_TINYTEX=1   install TinyTeX even if another TeX exists (testing)
 
+#
+# Copyright (C) 2026 Punpiti Piamsa-nga
+# Licensed under the LaTeX Project Public License 1.3c or later (see LICENSE).
+# https://github.com/punpiti/kuthesis
+
 set -euo pipefail
 
 REPO="punpiti/kuthesis"

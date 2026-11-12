@@ -172,3 +172,7 @@ Tell the student:
 5. Back up `work/<name>/` themselves (OneDrive/Google Drive) — it is intentionally not in git.
 
 Finish with a one-paragraph summary of what you installed, where, and the versions.
+
+---
+
+<sub>kuthesis — Copyright (C) 2026 Punpiti Piamsa-nga. Licensed under the LaTeX Project Public License 1.3c or later (see LICENSE).</sub>

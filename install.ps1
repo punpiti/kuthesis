@@ -14,6 +14,11 @@
 #   KUTHESIS_NO_AI    '1' = do not install an AI CLI
 #   KUTHESIS_SRC      local copy of the repository (testing)
 
+#
+# Copyright (C) 2026 Punpiti Piamsa-nga
+# Licensed under the LaTeX Project Public License 1.3c or later (see LICENSE).
+# https://github.com/punpiti/kuthesis
+
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'   # much faster Invoke-WebRequest
 try { [Console]::OutputEncoding = [Text.Encoding]::UTF8 } catch {}

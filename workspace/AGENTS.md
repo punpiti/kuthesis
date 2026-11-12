@@ -16,3 +16,5 @@ mark them in the PDF with red `[TODO: …]`.
 
 If tools are missing (`xelatex`, `biber`, `latexmk` not found, or the font is missing), tell the
 student to re-run the installer command from https://punpiti.github.io/kuthesis/ .
+
+<!-- kuthesis -- Copyright (C) 2026 Punpiti Piamsa-nga. Licensed under the LaTeX Project Public License 1.3c or later (see LICENSE). -->
