@@ -221,7 +221,7 @@ xelatex example-th && biber example-th && xelatex example-th && xelatex example-
 
 ใช้ แก้ไข และแจกจ่ายต่อได้ฟรี โดย **ต้องคงข้อความลิขสิทธิ์ที่มีชื่อผู้สร้างและข้อความสัญญาอนุญาตไว้ในทุกสำเนาและงานที่แก้ไข**
 ถ้านำไปแก้ไขแล้วเผยแพร่ ขอให้ระบุว่าแก้อะไรและลิงก์กลับมาที่ต้นฉบับ
-วิทยานิพนธ์และ PDF ที่สร้างด้วย kuthesis เป็นของนิสิตผู้เขียน ตรามหาวิทยาลัยใน `logo/` ไม่อยู่ภายใต้ MIT (ดู LICENSE)
+วิทยานิพนธ์และ PDF ที่สร้างด้วย kuthesis เป็นของนิสิตผู้เขียน ตรามหาวิทยาลัยใน `logo/` ไม่อยู่ภายใต้ MIT (ดู [NOTICE.md](NOTICE.md))
 
 Free to use, modify and redistribute; keep the copyright notice (with the author's name) and the
 license text in all copies and modified versions.
